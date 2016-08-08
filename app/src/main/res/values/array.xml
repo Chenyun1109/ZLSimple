@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="internet">
+        <item>apple</item>
+        <item>MacTalk</item>
+        <item>体验之美</item>
+        <item>最美应用</item>
+        <item>数据冰山</item>
+        <item>小道消息</item>
+        <item>Rio说</item>
+    </string-array>
+
+    <string-array name="internet_suffix">
+        <item>Apple</item>
+        <item>mactalk</item>
+        <item>design</item>
+        <item>zuimei</item>
+        <item>hemingke</item>
+        <item>WebNotes</item>
+        <item>riobard</item>
+    </string-array>
+
+    <string-array name="book">
+        <item>西流堂</item>
+        <item>文明之光</item>
+        <item>读书有疑</item>
+        <item>异教徒告解室</item>
+        <item>张佳玮写字的地方</item>
+        <item>黄健说</item>
+        <item>听甘德霜讲故事</item>
+        <item>人丑就该多读书</item>
+    </string-array>
+
+    <string-array name="book_suffix">
+        <item>xiliutang</item>
+        <item>wujun</item>
+        <item>doubtsinreading</item>
+        <item>maboyong</item>
+        <item>zhangjiawei</item>
+        <item>huangjian</item>
+        <item>tgdsjgs</item>
+        <item>uglypeoplefuckbooks</item>
+    </string-array>
+
+    <string-array name="develop">
+        <item>Android Weekly</item>
+        <item>AndroidDeveloper</item>
+        <item>开发技术前线</item>
+        <item>Android 科学院</item>
+        <item>C++</item>
+        <item>前端外刊评论</item>
+        <item>程序员的自我修养</item>
+    </string-array>
+
+    <string-array name="develop_suffix">
+        <item>android-weekly</item>
+        <item>stormzhang</item>
+        <item>tech-frontier</item>
+        <item>andlib</item>
+        <item>nihaoCPP</item>
+        <item>FrontendMagazine</item>
+        <item>netjob</item>
+    </string-array>
+
+    <string-array name="zhihu">
+        <item>知乎电子书</item>
+        <item>知乎日报</item>
+        <item>知识青年</item>
+        <item>知乎日爆</item>
+    </string-array>
+
+    <string-array name="zhihu_suffix">
+        <item>Weekly</item>
+        <item>daily</item>
+        <item>zhihumkt</item>
+        <item>booom</item>
+    </string-array>
+
+    <string-array name="movie">
+        <item>MovieDaily</item>
+        <item>太空堡垒</item>
+        <item>木易影评</item>
+        <item>48帧</item>
+        <item>Real Fantasy</item>
+        <item>知影</item>
+        <item>日剧乱谈</item>
+        <item>登爷的资料库</item>
+    </string-array>
+
+    <string-array name="movie_suffix">
+        <item>MovieDaily</item>
+        <item>Battlestar</item>
+        <item>happymuyi</item>
+        <item>48zhen</item>
+        <item>nordenbox</item>
+        <item>zhimovie</item>
+        <item>rijuluantan</item>
+        <item>nordenbox</item>
+    </string-array>
+
+    <string-array name="music">
+        <item>乱弹琴</item>
+        <item>古典音乐</item>
+        <item>那些年听过的歌</item>
+        <item>弦语者</item>
+        <item>大豆，音乐以及其他</item>
+        <item>狂喜之诗</item>
+    </string-array>
+
+    <string-array name="music_suffix">
+        <item>DKLearnsPop</item>
+        <item>classicalmusic</item>
+        <item>1song</item>
+        <item>violinist</item>
+        <item>adamsuen</item>
+        <item>klexraxmusic</item>
+    </string-array>
+
+
+</resources>
