@@ -33,7 +33,6 @@ public class SearchPresenterImpl extends BasePresenterImpl<SearchView>
                 KLog.i(throwable.toString());
             }
         });
-
     }
 
 
@@ -51,7 +50,7 @@ public class SearchPresenterImpl extends BasePresenterImpl<SearchView>
         } else {
             limits = Integer.valueOf(limit);
         }
-//        view.adapterRemove();
+        view.adapterRemove();
         view.showProgress();
         NetWorkRequest.getList(suffix, limits, new MySubscriber<List<ListModel>>() {
             @Override

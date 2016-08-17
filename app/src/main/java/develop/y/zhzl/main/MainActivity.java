@@ -20,9 +20,11 @@ import develop.y.zhzl.search.widget.SearchFragment;
 import framework.App;
 import framework.data.Constant;
 import framework.utils.CacheUitls;
+import framework.utils.RxBus;
 import framework.utils.SpfUtils;
 import framework.utils.StatusBarUtil;
 import framework.utils.UIUtils;
+import rx.functions.Action1;
 
 public class MainActivity extends DarkViewActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -51,6 +53,19 @@ public class MainActivity extends DarkViewActivity
         } else {
             imageViewTheme.setBackgroundResource(R.drawable.night);
         }
+
+
+        RxBus.getInstance().toObserverable(Constant.THEME_TAG).subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                navigationView.getMenu().findItem(R.id.zhihu).setChecked(true);
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+
+            }
+        });
     }
 
     @Override
@@ -110,7 +125,6 @@ public class MainActivity extends DarkViewActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         item.setChecked(true);
         toolbar.setTitle(item.getTitle());
-
         switch (item.getItemId()) {
             case R.id.zhihu:
                 replaceFragment(TabFragment.newInstance(Constant.ZHIHU));

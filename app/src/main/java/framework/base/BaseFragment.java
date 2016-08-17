@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import framework.utils.RxUtils;
-
 /**
  * by y on 2016/8/7.
  */
@@ -91,12 +89,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected void setLoad() {
         isLoad = true;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        RxUtils.unsubscribe();
     }
 
     public interface BackHandledInterface {

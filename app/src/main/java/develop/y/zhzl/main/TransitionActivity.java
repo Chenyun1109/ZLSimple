@@ -13,6 +13,7 @@ import develop.y.zhzl.R;
 import framework.App;
 import framework.data.Constant;
 import framework.utils.CacheUitls;
+import framework.utils.RxBus;
 import framework.utils.UIUtils;
 
 public class TransitionActivity extends Activity {
@@ -48,6 +49,7 @@ public class TransitionActivity extends Activity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
+                RxBus.getInstance().send(Constant.THEME_TAG, "");
                 finish();
                 overridePendingTransition(0, android.R.anim.fade_out);
                 CacheUitls.getInstance().remove(Constant.BITMAP_CACHE_KEY);

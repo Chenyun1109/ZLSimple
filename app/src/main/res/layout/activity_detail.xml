@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_menu_share"
-        app:backgroundTint="?attr/head_color"
+        app:backgroundTint="?attr/fab_color"
         app:borderWidth="0dp"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom|end|right" />

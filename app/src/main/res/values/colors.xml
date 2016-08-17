@@ -9,6 +9,9 @@
     <color name="head_color_day">#6633CC</color>
     <color name="head_color_night">#2b2b2b</color>
 
+    <color name="fab_color_day">#6633CC</color>
+    <color name="fab_color_night">#5E5E5E</color>
+
     <color name="text_color_day">#777</color>
     <color name="text_color_night">#ccc</color>
 

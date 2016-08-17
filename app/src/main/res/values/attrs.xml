@@ -26,5 +26,6 @@
     <attr name="tab_SelectedTextColor" format="reference|color" />
     <attr name="tab_IndicatroColor" format="reference|color" />
     <attr name="head_color" format="reference|color" />
+    <attr name="fab_color" format="reference|color" />
 
 </resources>

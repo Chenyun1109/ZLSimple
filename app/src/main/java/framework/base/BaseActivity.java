@@ -7,7 +7,6 @@ import android.view.View;
 
 import framework.App;
 import framework.data.Constant;
-import framework.utils.RxUtils;
 import framework.utils.SpfUtils;
 import framework.utils.swipeback.SwipeBackActivity;
 import framework.utils.swipeback.SwipeBackLayout;
@@ -89,9 +88,4 @@ public abstract class BaseActivity extends SwipeBackActivity implements BaseFrag
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        RxUtils.unsubscribe();
-    }
 }

@@ -30,6 +30,7 @@
         <item name="tab_SelectedTextColor">@color/tab_selected_color_day</item>
         <item name="tab_IndicatroColor">@color/tab_indicatro_color_day</item>
         <item name="head_color">@color/head_color_day</item>
+        <item name="fab_color">@color/fab_color_day</item>
     </style>
 
 
@@ -43,6 +44,7 @@
         <item name="tab_SelectedTextColor">@color/tab_selected_color_night</item>
         <item name="tab_IndicatroColor">@color/tab_indicatro_color_night</item>
         <item name="head_color">@color/head_color_night</item>
+        <item name="fab_color">@color/fab_color_night</item>
     </style>
 
     <style name="Theme" parent="android:Theme">

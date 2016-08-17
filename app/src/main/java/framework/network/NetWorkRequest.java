@@ -1,8 +1,6 @@
 package framework.network;
 
 
-import com.socks.library.KLog;
-
 import java.util.List;
 
 import develop.y.zhzl.detail.model.DetailModel;

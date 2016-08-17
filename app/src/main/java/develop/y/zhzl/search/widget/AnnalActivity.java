@@ -46,7 +46,7 @@ public class AnnalActivity extends DarkViewActivity implements BaseRecyclerViewA
             annalAdapter.addAll(GreenDaoDbUtils.getSuffixAll());
 
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_GRIDVIEW, LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(annalAdapter);
         }
     }
@@ -71,7 +71,6 @@ public class AnnalActivity extends DarkViewActivity implements BaseRecyclerViewA
     @Override
     public void onItemClick(View view, int position, SearchSuffix info) {
     }
-
 
     public class AnnalAdapter extends BaseRecyclerViewAdapter<SearchSuffix> {
 
