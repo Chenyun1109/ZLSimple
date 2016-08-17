@@ -22,6 +22,10 @@
         </activity>
         <activity android:name=".detail.widget.DetailActivity" />
         <activity android:name=".main.AboutActivity" />
+        <activity android:name=".search.widget.AnnalActivity" />
+        <activity
+            android:name=".main.TransitionActivity"
+            android:theme="@style/Theme" />
     </application>
 
 </manifest>

@@ -7,14 +7,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import develop.y.zhzl.R;
-import framework.base.BaseActivity;
-import framework.utils.StatusBarUtils;
+import framework.utils.StatusBarUtil;
 import framework.utils.UIUtils;
 
 /**
  * by y on 2016/8/7.
  */
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends DarkViewActivity {
 
     private ImageView imageView;
     private CollapsingToolbarLayout collapsingToolbar;
@@ -40,7 +39,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void setStatusBar() {
         super.setStatusBar();
-        StatusBarUtils.setTranslucentForImageView(getActivity(), imageView);
+        StatusBarUtil.setTranslucentForImageView(getActivity(), imageView);
     }
 
     @Override

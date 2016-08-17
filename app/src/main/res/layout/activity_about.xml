@@ -18,7 +18,7 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/colorPrimary"
+            app:contentScrim="?attr/toolbarbackgroundColor"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -30,7 +30,7 @@
                 android:background="@drawable/about_head"
                 tools:ignore="ContentDescription" />
 
-            <include layout="@layout/toolbar" />
+            <include layout="@layout/collapsingtoolbar_toolbar" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -38,6 +38,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/backgroundColor"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -47,19 +48,21 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="@dimen/head_marginTop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/head_marginTop"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/padding"
-                android:text="app有侵犯知乎权益的嫌疑,若被告知禁止使用api,本人会删除相关的东西以及代码 \n 请遵守知乎协议" />
+                android:text="app有侵犯知乎权益的嫌疑,若被告知禁止使用api,本人会删除相关的东西以及代码 \n 请遵守知乎协议"
+                android:textColor="?attr/textColor" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/padding"
-                android:text="@string/thank" />
+                android:text="@string/thank"
+                android:textColor="?attr/textColor" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -75,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/padding"
-                android:text="@string/zl_suffix" />
+                android:text="@string/zl_suffix"
+                android:textColor="?attr/textColor" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -115,7 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_menu_share"
-        app:backgroundTint="@color/purple"
+        app:backgroundTint="?attr/head_color"
         app:borderWidth="0dp"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom|end|right" />

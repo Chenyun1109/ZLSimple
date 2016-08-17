@@ -8,6 +8,38 @@ public class ListModel {
     private String title;
     private String titleImage;
     private int slug;
+    private Author author;
+
+    public class Author {
+        private String profileUrl;
+        private String bio;
+        private String name;
+
+        public String getProfileUrl() {
+            return profileUrl;
+        }
+
+        public void setProfileUrl(String profileUrl) {
+            this.profileUrl = profileUrl;
+        }
+
+        public String getBio() {
+            return bio;
+        }
+
+        public void setBio(String bio) {
+            this.bio = bio;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+    }
 
     public int getSlug() {
         return slug;
@@ -31,5 +63,13 @@ public class ListModel {
 
     public void setTitleImage(String titleImage) {
         this.titleImage = titleImage;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }

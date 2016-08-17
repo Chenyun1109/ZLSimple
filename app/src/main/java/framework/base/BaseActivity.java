@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import framework.App;
+import framework.data.Constant;
 import framework.utils.RxUtils;
+import framework.utils.SpfUtils;
 import framework.utils.swipeback.SwipeBackActivity;
 import framework.utils.swipeback.SwipeBackLayout;
 
@@ -22,6 +24,7 @@ public abstract class BaseActivity extends SwipeBackActivity implements BaseFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = this;
+        initTheme();
         setContentView(getLayoutId());
         initById();
         initCreate(savedInstanceState);
@@ -35,6 +38,18 @@ public abstract class BaseActivity extends SwipeBackActivity implements BaseFrag
         } else {
             swipeBackLayout.setEnableGesture(false);
         }
+    }
+
+    protected void initTheme() {
+        if (getThemeType()) {
+            setTheme(Constant.DAY_STYLES);
+        } else {
+            setTheme(Constant.NIGHT_STYLES);
+        }
+    }
+
+    public boolean getThemeType() {
+        return SpfUtils.isTheme(Constant.DAY);
     }
 
     @Override

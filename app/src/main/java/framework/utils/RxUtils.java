@@ -21,12 +21,11 @@ public class RxUtils {
 
 
     public static void onBus(final RxBusNetWork rxBusNetWork) {
-        RxBus.getInstance().toObserverable(Object.class).subscribe(new Action1<Object>() {
+        RxBus.getInstance().toObserverable(Constant.NETWORK_ERROR).subscribe(new Action1<Object>() {
             @Override
             public void call(Object o) {
-                if (o == Constant.NETWORK_ERROR) {
-                    rxBusNetWork.onError();
-                }
+                KLog.i(o);
+                rxBusNetWork.onError();
             }
         }, new Action1<Throwable>() {
             @Override

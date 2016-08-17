@@ -19,7 +19,6 @@
     <string name="zl_suffix">专栏suffix来源</string>
     <string name="search_title">请输入专栏suffix</string>
     <string name="dialog_ok">搜索</string>
-    <string name="dialog_finish">取消</string>
     <string name="suffix_null">suffix不能为空</string>
     <string name="suffix_hint">suffix</string>
     <string name="limit">获取多少条数据,默认20条</string>
@@ -30,12 +29,15 @@
     <string name="suffix_error">查找失败,请检查网络或者suffix</string>
 
     <string name="suffix">https://www.zhihu.com/question/21388193</string>
-    <string name="project">rxjava,rxandroid \n retrofit,converter-gson,adapter-rxjava \n glide \n klog \n google</string>
+    <string name="project">rxjava,rxandroid \n retrofit,converter-gson,adapter-rxjava \n glide \n klog \n google \n greendao</string>
     <string name="search_explanation">如何查找专栏的suffix? \n 以木易聊影为例 \n 木易聊影的专栏地址为 \n https://zhuanlan.zhihu.com/happymuyi \n 那么木易聊影的suffix就是happymuyi \n 手机和电脑查找方法一样 \n 或者长按应用内你喜欢的专栏内容复制suffix \n 在这里查阅更多数据</string>
     <string name="zl_address">https://zhuanlan.zhihu.com/</string>
     <string name="suffix_copy">这个专栏的suffix已复制到粘贴板</string>
     <string name="list_ok">确认</string>
     <string name="git_address">https://github.com/7449/ZLSimple</string>
     <string name="detail_share">这个知乎专栏的分享内容还不错,推荐一下,他的知乎主页是：</string>
+    <string name="dialog_annal">搜索历史</string>
+    <string name="no_annal">没有搜索历史</string>
+    <string name="annal_title">搜索历史</string>
 
 </resources>

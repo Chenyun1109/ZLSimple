@@ -20,7 +20,6 @@ public class NetWorkRequest {
 
     public static void getList(String suffix, int limit, Subscriber<List<ListModel>> subscriber) {
         RxUtils.unsubscribe();
-        KLog.i(suffix);
         RxUtils.subscription = NetWork.getZlApi().getList(suffix, limit, Constant.OFFSET)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

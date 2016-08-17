@@ -1,7 +1,5 @@
 package framework.network;
 
-import com.socks.library.KLog;
-
 import framework.data.Constant;
 import framework.utils.RxBus;
 import rx.Subscriber;
@@ -18,8 +16,7 @@ public class MySubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
-        KLog.i(e.getMessage());
-        RxBus.getInstance().sendNetWork(Constant.NETWORK_ERROR);
+        RxBus.getInstance().send(Constant.NETWORK_ERROR, e.toString());
     }
 
     @Override

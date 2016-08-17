@@ -56,7 +56,7 @@ class NetWork {
             okhttp3.MediaType mediaType = response.body().contentType();
             String content = response.body().string();
             KLog.i(chain.request().toString());
-//          KLog.i(String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s", response.request().url(), (System.nanoTime() - System.nanoTime()) / 1e6d, response.headers()));
+//            KLog.i(String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s", response.request().url(), (System.nanoTime() - System.nanoTime()) / 1e6d, response.headers()));
             KLog.json(content);
             if (response.body() != null) {
                 ResponseBody body = ResponseBody.create(mediaType, content);

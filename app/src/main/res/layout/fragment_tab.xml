@@ -12,7 +12,11 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable" />
+            android:background="?attr/tab_BackgroundColor"
+            app:tabIndicatorColor="?attr/tab_IndicatroColor"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="?attr/tab_SelectedTextColor"
+            app:tabTextColor="?attr/tab_TextColor" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

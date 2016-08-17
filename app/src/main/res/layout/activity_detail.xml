@@ -5,9 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:ignore="Overdraw">
-
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -19,7 +17,7 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/colorPrimary"
+            app:contentScrim="?attr/toolbarbackgroundColor"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -28,10 +26,11 @@
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:background="?attr/backgroundColor"
                 android:scaleType="centerCrop"
                 tools:ignore="ContentDescription" />
 
-            <include layout="@layout/toolbar" />
+            <include layout="@layout/collapsingtoolbar_toolbar" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -39,6 +38,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/backgroundColor"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
@@ -63,8 +63,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/white" />
+                android:layout_marginTop="20dp" />
 
         </LinearLayout>
 
@@ -76,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_menu_share"
-        app:backgroundTint="@color/purple"
+        app:backgroundTint="?attr/head_color"
         app:borderWidth="0dp"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom|end|right" />

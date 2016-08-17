@@ -4,6 +4,8 @@ package framework.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -24,7 +26,7 @@ public class UIUtils {
 
 
     public static Context getContext() {
-        return App.getContext();
+        return App.getInstance();
     }
 
     public static Activity getActivity() {
@@ -101,6 +103,25 @@ public class UIUtils {
         intent.putExtra(Intent.EXTRA_TEXT, message);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(Intent.createChooser(intent, getString(R.string.share)));
+    }
+
+    public static Bitmap captureContent(Activity activity) {
+        //View是你需要截图的View
+        View view = activity.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap b1 = view.getDrawingCache();
+        // 获取状态栏高度 /
+        Rect frame = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        int statusBarHeight = frame.top;
+        // 获取屏幕长和高
+        int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+        int height = activity.getWindowManager().getDefaultDisplay().getHeight();
+        // 去掉标题栏
+        Bitmap b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height - statusBarHeight);
+        view.destroyDrawingCache();
+        return b;
     }
 
 

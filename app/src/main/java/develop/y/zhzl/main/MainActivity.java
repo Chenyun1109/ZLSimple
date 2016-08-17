@@ -18,22 +18,23 @@ import develop.y.zhzl.R;
 import develop.y.zhzl.list.widget.TabFragment;
 import develop.y.zhzl.search.widget.SearchFragment;
 import framework.App;
-import framework.base.BaseActivity;
 import framework.data.Constant;
-import framework.utils.StatusBarUtils;
+import framework.utils.CacheUitls;
+import framework.utils.SpfUtils;
+import framework.utils.StatusBarUtil;
 import framework.utils.UIUtils;
 
-public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends DarkViewActivity
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private static boolean BACK_EXIT = false;
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private ImageView imageView;
     private AppBarLayout appBarLayout;
     private FloatingActionButton floatingActionButton;
     private AppBarLayout.LayoutParams layoutParams;
+    private ImageView imageViewTheme;
 
     @Override
     protected void initCreate(Bundle savedInstanceState) {
@@ -43,19 +44,19 @@ public class MainActivity extends BaseActivity
         replaceFragment(TabFragment.newInstance(Constant.ZHIHU));
         layoutParams = (AppBarLayout.LayoutParams) appBarLayout.getChildAt(0).getLayoutParams();
         layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawers();
-                UIUtils.SnackBar(floatingActionButton, getString(R.string.head_image));
-            }
-        });
+
+
+        if (SpfUtils.isTheme(Constant.DAY)) {
+            imageViewTheme.setBackgroundResource(R.drawable.day);
+        } else {
+            imageViewTheme.setBackgroundResource(R.drawable.night);
+        }
     }
 
     @Override
     protected void setStatusBar() {
         super.setStatusBar();
-        StatusBarUtils.setColorForDrawerLayout(this, drawerLayout, 0);
+        StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, 0);
     }
 
     @Override
@@ -65,7 +66,9 @@ public class MainActivity extends BaseActivity
         navigationView = getView(R.id.navigationview);
         appBarLayout = getView(R.id.appbar);
         floatingActionButton = getView(R.id.fa_btn);
-        imageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.iv_head);
+        navigationView.getHeaderView(0).findViewById(R.id.iv_head).setOnClickListener(this);
+        imageViewTheme = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.iv);
+        imageViewTheme.setOnClickListener(this);
     }
 
     @Override
@@ -170,5 +173,28 @@ public class MainActivity extends BaseActivity
 
     private void hideFAB() {
         floatingActionButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_head:
+                drawerLayout.closeDrawers();
+                UIUtils.SnackBar(floatingActionButton, getString(R.string.head_image));
+                break;
+            case R.id.iv:
+                if (getThemeType()) {
+                    imageViewTheme.setBackgroundResource(R.drawable.night);
+                    setTheme(Constant.NIGHT_STYLES);
+                    SpfUtils.setTheme(Constant.NIGHT);
+                } else {
+                    imageViewTheme.setBackgroundResource(R.drawable.day);
+                    setTheme(Constant.DAY_STYLES);
+                    SpfUtils.setTheme(Constant.DAY);
+                }
+                CacheUitls.getInstance().put(Constant.BITMAP_CACHE_KEY, UIUtils.captureContent(this));
+                TransitionActivity.startIntent();
+                break;
+        }
     }
 }

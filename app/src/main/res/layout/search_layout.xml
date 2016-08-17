@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:autoLink="web"
+        android:padding="@dimen/padding"
+        android:text="@string/search_title"
+        android:textColor="?attr/textColor"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -19,7 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
-        android:hint="@string/suffix_hint" />
+        android:hint="@string/suffix_hint"
+        android:textColor="?attr/textColor"
+        android:textColorHint="?attr/textColor" />
 
     <EditText
         android:id="@+id/limit"
@@ -28,6 +43,35 @@
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
         android:hint="@string/limit"
-        android:inputType="number" />
+        android:inputType="number"
+        android:textColor="?attr/textColor"
+        android:textColorHint="?attr/textColor" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:text="@string/dialog_ok"
+            android:textColor="?attr/textColor"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/btn_annal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:text="@string/dialog_annal"
+            android:textColor="?attr/textColor"
+            tools:ignore="RtlHardcoded" />
+    </RelativeLayout>
+
 
 </LinearLayout>

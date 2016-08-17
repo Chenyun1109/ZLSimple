@@ -15,16 +15,16 @@ import develop.y.zhzl.R;
 import develop.y.zhzl.detail.model.DetailModel;
 import develop.y.zhzl.detail.presenter.DetailPresenterImpl;
 import develop.y.zhzl.detail.view.DetailView;
-import framework.base.BaseActivity;
+import develop.y.zhzl.main.DarkViewActivity;
 import framework.utils.HtmlUtils;
 import framework.utils.ImageLoaderUtils;
-import framework.utils.StatusBarUtils;
+import framework.utils.StatusBarUtil;
 import framework.utils.UIUtils;
 
 /**
  * by y on 2016/8/7.
  */
-public class DetailActivity extends BaseActivity
+public class DetailActivity extends DarkViewActivity
         implements DetailView {
 
     private ImageView imageView;
@@ -63,7 +63,7 @@ public class DetailActivity extends BaseActivity
     @Override
     protected void setStatusBar() {
         super.setStatusBar();
-        StatusBarUtils.setTranslucentForImageView(getActivity(), imageView);
+        StatusBarUtil.setTranslucentForImageView(getActivity(), imageView);
     }
 
     @Override
@@ -94,6 +94,7 @@ public class DetailActivity extends BaseActivity
 
     @Override
     public void setData(final DetailModel data) {
+
         webView.loadDataWithBaseURL(null, HtmlUtils.getHtml(data.getContent()), HtmlUtils.getMimeType(), HtmlUtils.getCoding(), null);
         ImageLoaderUtils.display(this, imageView, data.getTitleImage());
         collapsingToolbar.setTitle(data.getTitle());

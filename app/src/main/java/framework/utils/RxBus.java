@@ -1,8 +1,13 @@
 package framework.utils;
 
+import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import rx.Observable;
 import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
 import rx.subjects.Subject;
 
 /**
@@ -10,10 +15,10 @@ import rx.subjects.Subject;
  */
 public class RxBus {
 
-    private final Subject rxBus;
+    private HashMap<Object, List<Subject>> rxMap;
 
     private RxBus() {
-        rxBus = new SerializedSubject<>(PublishSubject.create());
+        rxMap = new HashMap<>();
     }
 
     public static RxBus getInstance() {
@@ -24,13 +29,34 @@ public class RxBus {
         private static final RxBus rxBus = new RxBus();
     }
 
-    public void sendNetWork(Object object) {
-        //noinspection unchecked
-        rxBus.onNext(object);
+
+    public void send(@NonNull Object tag, @NonNull Object object) {
+        List<Subject> subjects = rxMap.get(tag);
+        if (!subjects.isEmpty()) {
+            for (Subject s : subjects) {
+                s.onNext(object);
+            }
+        }
     }
 
-    public <T> Observable<T> toObserverable(final Class<T> eventType) {
-        //noinspection unchecked
-        return rxBus.ofType(eventType);
+    public void unregister(@NonNull Object tag, @NonNull Observable observable) {
+        List<Subject> subjects = rxMap.get(tag);
+        if (subjects != null) {
+            subjects.remove(observable);
+            if (subjects.isEmpty()) {
+                rxMap.remove(tag);
+            }
+        }
+    }
+
+    public <T> Observable<T> toObserverable(@NonNull Object tag) {
+        List<Subject> rxList = rxMap.get(tag);
+        if (rxList == null) {
+            rxList = new ArrayList<>();
+            rxMap.put(tag, rxList);
+        }
+        Subject<T, T> subject = PublishSubject.create();
+        rxList.add(subject);
+        return subject;
     }
 }

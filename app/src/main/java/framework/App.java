@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import develop.y.zhzl.BuildConfig;
+import framework.utils.SpfUtils;
 
 /**
  * by y on 2016/8/7.
@@ -22,25 +23,16 @@ public class App extends Application {
 
     private static Context context;
 
-    public static Context getContext() {
-        return context;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
         KLog.init(BuildConfig.LOG_DEBUG, K_LOG);
+        SpfUtils.init(getInstance());
     }
 
-    private static class AppHolder {
-        public static final App APP_UTILS = new App();
-
-    }
-
-    @SuppressWarnings("SameReturnValue")
     public static App getInstance() {
-        return AppHolder.APP_UTILS;
+        return (App) context;
     }
 
     public void addActivity(Activity activity) {
@@ -53,4 +45,9 @@ public class App extends Application {
         }
     }
 
+    public void refreshAllActivity() {
+        for (Activity activity : activityList) {
+            activity.recreate();
+        }
+    }
 }

@@ -1,7 +1,7 @@
 package develop.y.zhzl.search.widget;
 
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
@@ -15,28 +15,28 @@ import framework.utils.UIUtils;
 public class SearchDialog {
 
 
-    public static void startSearch(Activity activity, final SearchInterface searchInterface) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+    public static void startSearch(final Activity activity, final SearchInterface searchInterface) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         View editView = UIUtils.getInflate(R.layout.search_layout);
         final EditText suffixEditText = (EditText) editView.findViewById(R.id.suffix);
         final EditText limitEditText = (EditText) editView.findViewById(R.id.limit);
-
-        builder.setTitle(UIUtils.getString(R.string.search_title));
         builder.setView(editView);
-        builder.setPositiveButton(UIUtils.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
+        final Dialog dialog = builder.show();
+        editView.findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View view) {
                 searchInterface.startSearch(suffixEditText.getText().toString().trim(), limitEditText.getText().toString().trim());
                 UIUtils.offKeyboard();
+                dialog.dismiss();
             }
         });
-        builder.setNegativeButton(UIUtils.getString(R.string.dialog_finish),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        UIUtils.offKeyboard();
-                    }
-                });
-        builder.create().show();
+        editView.findViewById(R.id.btn_annal).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AnnalActivity.startIntent();
+                dialog.dismiss();
+            }
+        });
     }
 
 

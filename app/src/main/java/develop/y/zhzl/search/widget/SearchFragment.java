@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ public class SearchFragment extends BaseFragment
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
     private TextView textView;
+    private Toolbar toolbar;
     private ProgressBar progressBar;
 
     private SearchPresenter searchPresenter;
@@ -51,6 +53,7 @@ public class SearchFragment extends BaseFragment
         recyclerView = getView(R.id.recyclerView);
         textView = getView(R.id.search_explanation);
         progressBar = getView(R.id.progressBar);
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
     }
 
     @Override
@@ -66,6 +69,7 @@ public class SearchFragment extends BaseFragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
+
     }
 
     @Override
@@ -85,8 +89,14 @@ public class SearchFragment extends BaseFragment
     @Override
     public void setData(List<ListModel> data) {
         if (!data.isEmpty()) {
+            toolbar.setTitle(data.get(0).getAuthor().getName());
             adapter.addAll(data);
         }
+    }
+
+    @Override
+    public void adapterRemove() {
+        adapter.removeAll();
     }
 
     @Override
@@ -126,7 +136,7 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void startSearch(String suffix, String limit) {
-        adapter.removeAll();
+        adapterRemove();
         searchPresenter.netWorkRequest(suffix, limit);
     }
 
@@ -147,4 +157,5 @@ public class SearchFragment extends BaseFragment
             ImageLoaderUtils.display(UIUtils.getContext(), holder.getImageView(R.id.list_image), data.getTitleImage());
         }
     }
+
 }

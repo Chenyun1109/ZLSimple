@@ -11,9 +11,12 @@ import framework.base.BaseView;
 public interface SearchView extends BaseView {
     void setData(List<ListModel> data);
 
+    void adapterRemove();
+
     void suffixIsEmpty();
 
     void showExplanation();
 
     void hideExplanation();
+
 }

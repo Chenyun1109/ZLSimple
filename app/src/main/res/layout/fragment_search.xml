@@ -25,6 +25,7 @@
             android:gravity="center"
             android:lineSpacingMultiplier="1.6"
             android:text="@string/search_explanation"
+            android:textColor="?attr/textColor"
             android:visibility="gone" />
 
         <android.support.v7.widget.RecyclerView

@@ -24,6 +24,11 @@ android {
             minifyEnabled false
         }
     }
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/java-gen']
+        }
+    }
 }
 
 dependencies {
@@ -37,6 +42,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.0.0'
     //noinspection GradleDependency
     compile 'com.android.support:design:24.0.0'
+
+    compile 'org.greenrobot:greendao-generator:2.2.0'
+    compile 'org.greenrobot:greendao:2.2.0'
 
     compile 'io.reactivex:rxjava:1.1.5'
     compile 'io.reactivex:rxandroid:1.2.0'
