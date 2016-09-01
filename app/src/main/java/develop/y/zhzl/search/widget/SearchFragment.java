@@ -1,6 +1,5 @@
 package develop.y.zhzl.search.widget;
 
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,11 +42,6 @@ public class SearchFragment extends BaseFragment
     private SearchAdapter adapter;
 
     @Override
-    protected View initView(Bundle savedInstanceState) {
-        return UIUtils.getInflate(R.layout.fragment_search);
-    }
-
-    @Override
     protected void initById() {
         floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.fa_btn);
         recyclerView = getView(R.id.recyclerView);
@@ -70,6 +64,11 @@ public class SearchFragment extends BaseFragment
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
 
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_search;
     }
 
     @Override

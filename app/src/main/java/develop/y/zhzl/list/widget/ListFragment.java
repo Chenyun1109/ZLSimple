@@ -49,17 +49,12 @@ public class ListFragment extends BaseFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle != null) {
+        if (null != bundle && !bundle.isEmpty()) {
             pos = bundle.getInt(FRAGMENT_INDEX);
             type = bundle.getString(FRAGMENT_TYPE);
         }
     }
 
-
-    @Override
-    protected View initView(Bundle savedInstanceState) {
-        return UIUtils.getInflate(R.layout.fragment_list);
-    }
 
     @Override
     protected void initById() {
@@ -93,6 +88,11 @@ public class ListFragment extends BaseFragment
         setLoad();
     }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_list;
+    }
+
 
     @Override
     protected boolean onBackPressed() {
@@ -120,16 +120,12 @@ public class ListFragment extends BaseFragment
 
     @Override
     public void showProgress() {
-        if (!swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(true);
-        }
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        if (swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

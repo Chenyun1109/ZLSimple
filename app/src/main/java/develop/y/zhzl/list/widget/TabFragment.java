@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import develop.y.zhzl.R;
 import framework.base.BaseFragment;
@@ -33,16 +32,11 @@ public class TabFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if (bundle != null) {
+        if (null != bundle && !bundle.isEmpty()) {
             type = bundle.getString(FRAGMENT_INDEX);
         }
     }
 
-
-    @Override
-    protected View initView(Bundle savedInstanceState) {
-        return UIUtils.getInflate(R.layout.fragment_tab);
-    }
 
     @Override
     protected void initById() {
@@ -54,6 +48,11 @@ public class TabFragment extends BaseFragment {
     protected void initData() {
         viewPager.setAdapter(new TabAdapter(getChildFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_tab;
     }
 
     @Override

@@ -43,12 +43,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = initView(savedInstanceState);
+            view = inflater.inflate(getLayoutId(), container, false);
             isPrepared = true;
         }
         initById();
         return view;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -77,14 +78,12 @@ public abstract class BaseFragment extends Fragment {
         initData();
     }
 
-    @SuppressWarnings("UnusedParameters")
-    protected abstract View initView(Bundle savedInstanceState);
-
     protected abstract void initById();
 
     protected abstract void initData();
 
-    @SuppressWarnings("SameReturnValue")
+    protected abstract int getLayoutId();
+
     protected abstract boolean onBackPressed();
 
     protected void setLoad() {

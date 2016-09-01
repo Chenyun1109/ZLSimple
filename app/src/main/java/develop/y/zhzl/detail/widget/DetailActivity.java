@@ -87,7 +87,7 @@ public class DetailActivity extends DarkViewActivity
 
     private void getBundle() {
         Bundle bundle = getIntent().getExtras();
-        if (!bundle.isEmpty()) {
+        if (null != bundle && !bundle.isEmpty()) {
             slug = bundle.getInt("slug");
         }
     }

@@ -1,5 +1,7 @@
 package develop.y.zhzl.search.presenter;
 
+import android.text.TextUtils;
+
 import com.socks.library.KLog;
 
 import java.util.List;
@@ -39,13 +41,13 @@ public class SearchPresenterImpl extends BasePresenterImpl<SearchView>
     @Override
     public void netWorkRequest(final String suffix, String limit) {
         view.hideExplanation();
-        if (suffix.isEmpty()) {
+        if (TextUtils.isEmpty(suffix)) {
             view.showExplanation();
             view.suffixIsEmpty();
             return;
         }
         int limits;
-        if (limit.isEmpty()) {
+        if (TextUtils.isEmpty(limit)) {
             limits = Constant.LIMIT;
         } else {
             limits = Integer.valueOf(limit);
