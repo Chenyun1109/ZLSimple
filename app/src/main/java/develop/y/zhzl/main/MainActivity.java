@@ -19,6 +19,7 @@ import develop.y.zhzl.list.widget.TabFragment;
 import develop.y.zhzl.search.widget.SearchFragment;
 import framework.App;
 import framework.data.Constant;
+import framework.sql.GreenDaoDbUtils;
 import framework.utils.CacheUitls;
 import framework.utils.RxBus;
 import framework.utils.SpfUtils;
@@ -194,7 +195,8 @@ public class MainActivity extends DarkViewActivity
         switch (view.getId()) {
             case R.id.iv_head:
                 drawerLayout.closeDrawers();
-                UIUtils.SnackBar(floatingActionButton, getString(R.string.head_image));
+                GreenDaoDbUtils.clear();
+                UIUtils.SnackBar(floatingActionButton, getString(R.string.clear_db));
                 break;
             case R.id.iv:
                 if (getThemeType()) {

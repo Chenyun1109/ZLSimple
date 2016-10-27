@@ -2,9 +2,6 @@ package framework.sql;
 
 import java.util.List;
 
-import develop.y.zhzl.SearchSuffix;
-import develop.y.zhzl.SearchSuffixDao;
-
 /**
  * by y on 2016/8/17.
  */

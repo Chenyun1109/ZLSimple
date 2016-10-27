@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/image_margin"
-    android:layout_marginEnd="@dimen/image_margin"
-    android:layout_marginStart="@dimen/image_margin"
-    android:layout_marginTop="@dimen/image_margin"
+    android:layout_margin="@dimen/image_margin"
+    android:background="?android:selectableItemBackground"
     app:cardCornerRadius="@dimen/image_margin">
 
     <LinearLayout

@@ -12,11 +12,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import develop.y.zhzl.R;
-import develop.y.zhzl.SearchSuffix;
 import develop.y.zhzl.main.DarkViewActivity;
 import framework.base.BaseRecyclerViewAdapter;
 import framework.data.Constant;
 import framework.sql.GreenDaoDbUtils;
+import framework.sql.SearchSuffix;
 import framework.utils.RxBus;
 import framework.utils.UIUtils;
 
@@ -35,16 +35,14 @@ public class AnnalActivity extends DarkViewActivity implements BaseRecyclerViewA
 
     @Override
     protected void initCreate(Bundle savedInstanceState) {
-        toolbar.setTitle(UIUtils.getString(R.string.annal_title));
+        toolbar.setTitle(getString(R.string.annal_title));
         if (GreenDaoDbUtils.getSuffixAll().isEmpty()) {
             tvAnnal.setVisibility(View.VISIBLE);
         } else {
             List<SearchSuffix> list = new LinkedList<>();
-
             AnnalAdapter annalAdapter = new AnnalAdapter(list);
             annalAdapter.setOnItemClickListener(this);
             annalAdapter.addAll(GreenDaoDbUtils.getSuffixAll());
-
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_GRIDVIEW, LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(annalAdapter);

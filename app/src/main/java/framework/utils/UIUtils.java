@@ -15,13 +15,11 @@ import android.widget.Toast;
 
 import develop.y.zhzl.R;
 import framework.App;
-import framework.base.BaseActivity;
 
 
 /**
  * by y on 2016/8/7.
  */
-@SuppressWarnings("ALL")
 public class UIUtils {
 
 
@@ -29,18 +27,12 @@ public class UIUtils {
         return App.getInstance();
     }
 
-    public static Activity getActivity() {
-        return BaseActivity.getActivity();
-    }
-
-
     public static Drawable getDrawable(int id) {
         //noinspection deprecation
         return getContext().getResources().getDrawable(id);
     }
 
     public static int getColor(int id) {
-        //noinspection deprecation
         return getContext().getResources().getColor(id);
     }
 
@@ -57,8 +49,8 @@ public class UIUtils {
     }
 
 
-    public static View getInflate(int layout) {
-        return View.inflate(getActivity(), layout, null);
+    public static View getInflate(Activity activity, int layout) {
+        return View.inflate(activity, layout, null);
     }
 
     public static void startActivity(Class<?> clz) {
@@ -75,7 +67,7 @@ public class UIUtils {
     }
 
     public static void offKeyboard() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
@@ -102,7 +94,7 @@ public class UIUtils {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, message);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getActivity().startActivity(Intent.createChooser(intent, getString(R.string.share)));
+        getContext().startActivity(Intent.createChooser(intent, getString(R.string.share)));
     }
 
     public static Bitmap captureContent(Activity activity) {

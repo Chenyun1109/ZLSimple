@@ -5,13 +5,12 @@ import java.util.List;
 import develop.y.zhzl.list.model.ListModel;
 import develop.y.zhzl.list.view.IListView;
 import framework.base.BasePresenterImpl;
-import framework.network.MySubscriber;
 import framework.network.NetWorkRequest;
 
 /**
  * by y on 2016/8/7.
  */
-public class ListPresenterImpl extends BasePresenterImpl<IListView>
+public class ListPresenterImpl extends BasePresenterImpl<IListView, List<ListModel>>
         implements ListPresenter {
 
 
@@ -19,23 +18,32 @@ public class ListPresenterImpl extends BasePresenterImpl<IListView>
         super(view);
     }
 
-
     @Override
-    public void netWorkRequest(String suffix, int limit) {
+    protected void showProgress() {
         view.showProgress();
-        NetWorkRequest.getList(suffix, limit, new MySubscriber<List<ListModel>>() {
-            @Override
-            public void onNext(List<ListModel> listModel) {
-                super.onNext(listModel);
-                view.setData(listModel);
-                view.hideProgress();
-            }
-        });
     }
 
     @Override
-    protected void netWorkError() {
+    protected void netWorkNext(List<ListModel> listModels) {
+        view.removeAllAdapter();
+        view.setData(listModels);
+    }
+
+
+    @Override
+    protected void hideProgress() {
         view.hideProgress();
+    }
+
+
+    @Override
+    public void netWorkRequest(String suffix, int limit) {
+        NetWorkRequest.getList(suffix, limit, getSubscriber());
+    }
+
+
+    @Override
+    protected void netWorkError() {
         view.netWorkError();
     }
 }

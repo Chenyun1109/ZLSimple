@@ -9,7 +9,6 @@
     <string name="search_zl">自食其力</string>
 
     <string name="share">分享：</string>
-    <string name="head_image">别点我</string>
     <string name="about">关于</string>
     <string name="thank">感谢开源</string>
     <string name="project_address">git地址：</string>
@@ -21,7 +20,7 @@
     <string name="suffix_null">suffix不能为空</string>
     <string name="suffix_hint">suffix</string>
     <string name="limit">获取多少条数据,默认20条</string>
-    <string name="suffix_title">专栏suffix</string>
+    <string name="suffix_title">专栏suffix：</string>
     <string name="suffix_message">确认要copy这个专栏的suffix吗？</string>
 
     <string name="network_error">网络异常</string>

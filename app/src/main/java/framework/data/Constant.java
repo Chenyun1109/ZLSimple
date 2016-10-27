@@ -11,7 +11,6 @@ public class Constant {
     public static final int RECYCLERVIEW_LISTVIEW = 1;
     public static final int RECYCLERVIEW_GRIDVIEW = 5;
 
-    public static final String NETWORK_ERROR = "error";
     public static final String BITMAP_CACHE_KEY = "key";
     public static final String ANNAL_TAG = "annal";
     public static final String THEME_TAG = "theme";

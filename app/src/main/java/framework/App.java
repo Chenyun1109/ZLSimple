@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import develop.y.zhzl.BuildConfig;
+import framework.utils.RxUtils;
 import framework.utils.SpfUtils;
 
 /**
@@ -43,6 +44,7 @@ public class App extends Application {
         for (Activity activity : activityList) {
             activity.finish();
         }
+        RxUtils.unsubscribe();
     }
 
     public void refreshAllActivity() {

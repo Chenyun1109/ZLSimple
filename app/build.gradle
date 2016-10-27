@@ -24,11 +24,6 @@ android {
             minifyEnabled false
         }
     }
-    sourceSets {
-        main {
-            java.srcDirs = ['src/main/java', 'src/main/java-gen']
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
@@ -38,13 +33,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    //noinspection GradleDependency
     compile 'com.android.support:appcompat-v7:24.0.0'
-    //noinspection GradleDependency
     compile 'com.android.support:cardview-v7:24.0.0'
-    //noinspection GradleDependency
-    compile 'com.android.support:recyclerview-v7:24.0.0'
-    //noinspection GradleDependency
     compile 'com.android.support:design:24.0.0'
     compile 'org.greenrobot:greendao-generator:2.2.0'
     compile 'org.greenrobot:greendao:2.2.0'

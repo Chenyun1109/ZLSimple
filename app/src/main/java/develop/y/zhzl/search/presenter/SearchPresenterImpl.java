@@ -10,7 +10,6 @@ import develop.y.zhzl.list.model.ListModel;
 import develop.y.zhzl.search.view.SearchView;
 import framework.base.BasePresenterImpl;
 import framework.data.Constant;
-import framework.network.MySubscriber;
 import framework.network.NetWorkRequest;
 import framework.sql.SearchSuffixDb;
 import framework.utils.RxBus;
@@ -19,8 +18,10 @@ import rx.functions.Action1;
 /**
  * by y on 2016/8/7.
  */
-public class SearchPresenterImpl extends BasePresenterImpl<SearchView>
+public class SearchPresenterImpl extends BasePresenterImpl<SearchView, List<ListModel>>
         implements SearchPresenter {
+
+    private String suffix;
 
     public SearchPresenterImpl(SearchView view) {
         super(view);
@@ -37,10 +38,27 @@ public class SearchPresenterImpl extends BasePresenterImpl<SearchView>
         });
     }
 
+    @Override
+    protected void showProgress() {
+        view.showProgress();
+        view.hideExplanation();
+    }
+
+    @Override
+    protected void netWorkNext(List<ListModel> listModels) {
+        view.adapterRemove();
+        SearchSuffixDb.insert(suffix);
+        view.setData(listModels);
+    }
+
+    @Override
+    protected void hideProgress() {
+        view.hideProgress();
+    }
+
 
     @Override
     public void netWorkRequest(final String suffix, String limit) {
-        view.hideExplanation();
         if (TextUtils.isEmpty(suffix)) {
             view.showExplanation();
             view.suffixIsEmpty();
@@ -52,23 +70,13 @@ public class SearchPresenterImpl extends BasePresenterImpl<SearchView>
         } else {
             limits = Integer.valueOf(limit);
         }
-        view.adapterRemove();
-        view.showProgress();
-        NetWorkRequest.getList(suffix, limits, new MySubscriber<List<ListModel>>() {
-            @Override
-            public void onNext(List<ListModel> listModels) {
-                super.onNext(listModels);
-                SearchSuffixDb.insert(suffix);
-                view.setData(listModels);
-                view.hideProgress();
-            }
-        });
+        this.suffix = suffix;
+        NetWorkRequest.getList(suffix, limits, getSubscriber());
     }
 
     @Override
     protected void netWorkError() {
-        view.showExplanation();
         view.netWorkError();
-        view.hideProgress();
+        view.showExplanation();
     }
 }

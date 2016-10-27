@@ -3,8 +3,6 @@ package framework.sql;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import develop.y.zhzl.DaoMaster;
-import develop.y.zhzl.DaoSession;
 import framework.utils.UIUtils;
 
 public class GreenDaoUtils {

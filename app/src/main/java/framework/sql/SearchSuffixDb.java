@@ -1,7 +1,5 @@
 package framework.sql;
 
-import develop.y.zhzl.SearchSuffix;
-
 /**
  * by y on 2016/8/17.
  */

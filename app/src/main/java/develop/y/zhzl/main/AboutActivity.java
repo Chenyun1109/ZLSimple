@@ -39,7 +39,7 @@ public class AboutActivity extends DarkViewActivity {
     @Override
     protected void setStatusBar() {
         super.setStatusBar();
-        StatusBarUtil.setTranslucentForImageView(getActivity(), imageView);
+        StatusBarUtil.setTranslucentForImageView(this, imageView);
     }
 
     @Override

@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * by y on 2016/8/7.
  */
-class NetWork {
+public class NetWork {
 
     private static Api.ZLService zlApi;
 
@@ -26,7 +26,7 @@ class NetWork {
     private static OkHttpClient getOkHttp() {
         return new OkHttpClient
                 .Builder()
-                .addInterceptor(new BaseInterceptor())
+                .addInterceptor(new LogInterceptor())
                 .build();
     }
 
@@ -49,14 +49,13 @@ class NetWork {
     }
 
 
-    private static class BaseInterceptor implements Interceptor {
+    private static class LogInterceptor implements Interceptor {
         @Override
         public okhttp3.Response intercept(Chain chain) throws IOException {
             okhttp3.Response response = chain.proceed(chain.request());
             okhttp3.MediaType mediaType = response.body().contentType();
             String content = response.body().string();
             KLog.i(chain.request().toString());
-//            KLog.i(String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s", response.request().url(), (System.nanoTime() - System.nanoTime()) / 1e6d, response.headers()));
 //            KLog.json(content);
             if (response.body() != null) {
                 ResponseBody body = ResponseBody.create(mediaType, content);

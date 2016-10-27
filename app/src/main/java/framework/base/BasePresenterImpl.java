@@ -1,27 +1,58 @@
 package framework.base;
 
 
-import framework.utils.RxUtils;
+import com.socks.library.KLog;
+
+import rx.Subscriber;
 
 /**
  * by y on 2016/8/7.
  */
-public abstract class BasePresenterImpl<V>
-        implements RxUtils.RxBusNetWork {
+public abstract class BasePresenterImpl<V, M> {
 
     protected final V view;
 
     protected BasePresenterImpl(V view) {
-        RxUtils.onBus(this);
         this.view = view;
     }
 
-    @Override
-    public void onError() {
-        netWorkError();
+    protected NetWorkSubscriber getSubscriber() {
+        return new NetWorkSubscriber();
     }
 
+    private class NetWorkSubscriber extends Subscriber<M> {
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            showProgress();
+        }
+
+        @Override
+        public void onCompleted() {
+            hideProgress();
+        }
+
+
+        @Override
+        public void onError(Throwable e) {
+            KLog.i(e.toString());
+            hideProgress();
+            netWorkError();
+        }
+
+        @Override
+        public void onNext(M t) {
+            netWorkNext(t);
+        }
+
+    }
+
+    protected abstract void showProgress();
+
+    protected abstract void netWorkNext(M m);
+
+    protected abstract void hideProgress();
+
     protected abstract void netWorkError();
-
-
 }

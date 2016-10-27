@@ -55,11 +55,6 @@ public class TabFragment extends BaseFragment {
         return R.layout.fragment_tab;
     }
 
-    @Override
-    protected boolean onBackPressed() {
-        return false;
-    }
-
     public class TabAdapter extends FragmentPagerAdapter {
 
         private String[] name;

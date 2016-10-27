@@ -63,7 +63,6 @@ public class SearchFragment extends BaseFragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
-
     }
 
     @Override
@@ -72,15 +71,10 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
-    protected boolean onBackPressed() {
-        return false;
-    }
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fa_btn:
-                SearchDialog.startSearch(getActivity(), this);
+                SearchDialog.start(getActivity(), this);
                 break;
         }
     }

@@ -23,7 +23,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     private List<T> mDatas = new LinkedList<>();
 
     public BaseRecyclerViewAdapter(List<T> mDatas) {
-        if (!mDatas.isEmpty()) {
+        if (mDatas != null) {
             this.mDatas = mDatas;
         }
     }

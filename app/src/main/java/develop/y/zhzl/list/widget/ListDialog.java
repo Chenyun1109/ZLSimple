@@ -1,42 +1,58 @@
 package develop.y.zhzl.list.widget;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import develop.y.zhzl.R;
+import framework.base.BaseDialog;
 import framework.utils.UIUtils;
+
+import static framework.utils.UIUtils.getString;
 
 /**
  * by y on 2016/8/7.
  */
-public class ListDialog {
+public class ListDialog extends BaseDialog implements View.OnClickListener {
 
+    private TextView textView;
+    private String suffix;
 
-    @SuppressLint("SetTextI18n")
-    public static void copySuffix(final Activity activity, final String suffix) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+    public static void start(Context context, String suffix) {
+        new ListDialog(context).initData(suffix);
+    }
 
-        View listView = UIUtils.getInflate(R.layout.list_dialog_layout);
-        TextView textView = (TextView) listView.findViewById(R.id.tv_title);
-        Button button = (Button) listView.findViewById(R.id.btn_list);
-        textView.setText(UIUtils.getString(R.string.suffix_title) + ":" + suffix);
-        builder.setView(listView);
-        final Dialog dialog = builder.show();
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClipboardManager cm = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+    protected ListDialog(@NonNull Context context) {
+        super(context);
+    }
+
+    @Override
+    protected void onCreateView() {
+        view = View.inflate(getContext(), R.layout.list_dialog_layout, null);
+    }
+
+    @Override
+    protected void initById() {
+        textView = (TextView) view.findViewById(R.id.tv_title);
+        view.findViewById(R.id.btn_list).setOnClickListener(this);
+    }
+
+    private void initData(String suffix) {
+        this.suffix = suffix;
+        textView.setText(getContext().getString(R.string.suffix_title) + this.suffix + "");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_list:
+                ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(suffix);
-                UIUtils.SnackBar(activity.findViewById(R.id.coordinatorLayout), UIUtils.getString(R.string.suffix_copy));
-                dialog.dismiss();
-            }
-        });
+                UIUtils.Toast(getString(R.string.suffix_copy));
+                dismiss();
+                break;
+        }
     }
 }

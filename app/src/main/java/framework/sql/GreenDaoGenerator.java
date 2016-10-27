@@ -11,7 +11,7 @@ public class GreenDaoGenerator {
 
     private static Entity entity;
     private static DaoGenerator daoGenerator;
-    private static final String PACKAGE = "develop.y.zhzl";
+    private static final String PACKAGE = "framework.sql";
     private static final String BEAN_NAME = "SearchSuffix";
 
     private static class SchemaHolder {
@@ -35,7 +35,7 @@ public class GreenDaoGenerator {
     }
 
     private static void startGreenDao() throws Exception {
-        getDaoGenerator().generateAll(getSchema(), "../ZLSimple/app/src/main/java-gen");
+        getDaoGenerator().generateAll(getSchema(), "./app/src/main/java");
     }
 
     public static void main(String[] args) throws Exception {

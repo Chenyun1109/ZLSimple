@@ -1,6 +1,5 @@
 package framework.base;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -14,21 +13,17 @@ import framework.utils.swipeback.SwipeBackLayout;
 /**
  * by y on 2016/8/7.
  */
-public abstract class BaseActivity extends SwipeBackActivity implements BaseFragment.BackHandledInterface {
-
-    private static Activity activity;
-    private BaseFragment baseFragment;
+public abstract class BaseActivity extends SwipeBackActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = this;
         initTheme();
         setContentView(getLayoutId());
         initById();
         initCreate(savedInstanceState);
         setStatusBar();
-        App.getInstance().addActivity(activity);
+        App.getInstance().addActivity(this);
         SwipeBackLayout swipeBackLayout = getSwipeBackLayout();
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT && isSwipeBackLayout()) {
@@ -51,14 +46,6 @@ public abstract class BaseActivity extends SwipeBackActivity implements BaseFrag
         return SpfUtils.isTheme(Constant.DAY);
     }
 
-    @Override
-    public void setSelectedFragment(BaseFragment selectedFragment) {
-        this.baseFragment = selectedFragment;
-    }
-
-    public static Activity getActivity() {
-        return activity;
-    }
 
     protected <T extends View> T getView(int id) {
         //noinspection unchecked
@@ -76,16 +63,5 @@ public abstract class BaseActivity extends SwipeBackActivity implements BaseFrag
     protected abstract int getLayoutId();
 
     protected abstract boolean isSwipeBackLayout();
-
-    @Override
-    public void onBackPressed() {
-        if (baseFragment == null || !baseFragment.onBackPressed()) {
-            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                super.onBackPressed();
-            } else {
-                getSupportFragmentManager().popBackStack();
-            }
-        }
-    }
 
 }

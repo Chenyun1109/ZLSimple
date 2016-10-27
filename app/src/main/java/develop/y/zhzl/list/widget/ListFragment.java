@@ -95,13 +95,7 @@ public class ListFragment extends BaseFragment
 
 
     @Override
-    protected boolean onBackPressed() {
-        return false;
-    }
-
-    @Override
     public void onRefresh() {
-        adapter.removeAll();
         listPresenter.netWorkRequest(getSuffix(pos, type), Constant.LIMIT);
     }
 
@@ -111,6 +105,11 @@ public class ListFragment extends BaseFragment
         if (!data.isEmpty()) {
             adapter.addAll(data);
         }
+    }
+
+    @Override
+    public void removeAllAdapter() {
+        adapter.removeAll();
     }
 
     @Override
@@ -135,7 +134,7 @@ public class ListFragment extends BaseFragment
 
     @Override
     public void onLongClick(View view, int position, ListModel info) {
-        ListDialog.copySuffix(getActivity(), getSuffix(pos, type));
+        ListDialog.start(getContext(), getSuffix(pos, type));
     }
 
     private String getSuffix(int position, String type) {

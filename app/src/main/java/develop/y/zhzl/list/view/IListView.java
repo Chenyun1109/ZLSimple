@@ -10,4 +10,6 @@ import framework.base.BaseView;
  */
 public interface IListView extends BaseView {
     void setData(List<ListModel> data);
+
+    void removeAllAdapter();
 }

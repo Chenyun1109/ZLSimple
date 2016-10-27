@@ -1,42 +1,60 @@
 package develop.y.zhzl.search.widget;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.support.v7.app.AlertDialog;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 
 import develop.y.zhzl.R;
+import framework.base.BaseDialog;
 import framework.utils.UIUtils;
 
 /**
  * by y on 2016/8/7.
  */
-public class SearchDialog {
+public class SearchDialog extends BaseDialog implements View.OnClickListener {
 
+    private EditText suffixEditText;
+    private EditText limitEditText;
+    private SearchInterface searchInterface = null;
 
-    public static void startSearch(final Activity activity, final SearchInterface searchInterface) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        View editView = UIUtils.getInflate(R.layout.search_layout);
-        final EditText suffixEditText = (EditText) editView.findViewById(R.id.suffix);
-        final EditText limitEditText = (EditText) editView.findViewById(R.id.limit);
-        builder.setView(editView);
-        final Dialog dialog = builder.show();
-        editView.findViewById(R.id.btn_search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchInterface.startSearch(suffixEditText.getText().toString().trim(), limitEditText.getText().toString().trim());
-                UIUtils.offKeyboard();
-                dialog.dismiss();
-            }
-        });
-        editView.findViewById(R.id.btn_annal).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    public static void start(Context context, SearchInterface searchInterface) {
+        new SearchDialog(context, searchInterface);
+    }
+
+    protected SearchDialog(@NonNull Context context, SearchInterface searchInterface) {
+        super(context);
+        this.searchInterface = searchInterface;
+    }
+
+    @Override
+    protected void onCreateView() {
+        view = View.inflate(getContext(), R.layout.search_layout, null);
+    }
+
+    @Override
+    protected void initById() {
+        view.findViewById(R.id.btn_search).setOnClickListener(this);
+        view.findViewById(R.id.btn_annal).setOnClickListener(this);
+        suffixEditText = (EditText) view.findViewById(R.id.suffix);
+        limitEditText = (EditText) view.findViewById(R.id.limit);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_search:
+                if (searchInterface != null) {
+                    searchInterface.startSearch(suffixEditText.getText().toString().trim(), limitEditText.getText().toString().trim());
+                    UIUtils.offKeyboard();
+                    dismiss();
+                }
+                break;
+            case R.id.btn_annal:
                 AnnalActivity.startIntent();
-                dialog.dismiss();
-            }
-        });
+                dismiss();
+                break;
+        }
     }
 
 
