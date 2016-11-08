@@ -31,7 +31,7 @@ public class AboutActivity extends DarkViewActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UIUtils.share(UIUtils.getString(R.string.share_about));
+                UIUtils.share(AboutActivity.this, UIUtils.getString(R.string.share_about));
             }
         });
     }

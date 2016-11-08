@@ -101,7 +101,7 @@ public class DetailActivity extends DarkViewActivity
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UIUtils.share(UIUtils.getString(R.string.detail_share) + data.getAuthor().getProfileUrl());
+                UIUtils.share(DetailActivity.this, UIUtils.getString(R.string.detail_share) + data.getAuthor().getProfileUrl());
             }
         });
     }

@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -29,11 +30,11 @@ public class UIUtils {
 
     public static Drawable getDrawable(int id) {
         //noinspection deprecation
-        return getContext().getResources().getDrawable(id);
+        return ContextCompat.getDrawable(getContext(), id);
     }
 
     public static int getColor(int id) {
-        return getContext().getResources().getColor(id);
+        return ContextCompat.getColor(getContext(), id);
     }
 
     public static String getString(int id) {
@@ -42,10 +43,6 @@ public class UIUtils {
 
     public static String[] getStringArray(int id) {
         return getContext().getResources().getStringArray(id);
-    }
-
-    public static String getSimpleName() {
-        return getContext().getClass().getSimpleName();
     }
 
 
@@ -89,12 +86,12 @@ public class UIUtils {
         return new Bundle();
     }
 
-    public static void share(String message) {
+    public static void share(Activity activity, String message) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, message);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getContext().startActivity(Intent.createChooser(intent, getString(R.string.share)));
+        activity.startActivity(Intent.createChooser(intent, getString(R.string.share)));
     }
 
     public static Bitmap captureContent(Activity activity) {
