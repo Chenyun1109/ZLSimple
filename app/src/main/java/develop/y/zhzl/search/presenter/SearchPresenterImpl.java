@@ -10,7 +10,7 @@ import develop.y.zhzl.list.model.ListModel;
 import develop.y.zhzl.search.view.SearchView;
 import framework.base.BasePresenterImpl;
 import framework.data.Constant;
-import framework.network.NetWorkRequest;
+import framework.network.NetWork;
 import framework.sql.SearchSuffixDb;
 import framework.utils.RxBus;
 import rx.functions.Action1;
@@ -71,7 +71,7 @@ public class SearchPresenterImpl extends BasePresenterImpl<SearchView, List<List
             limits = Integer.valueOf(limit);
         }
         this.suffix = suffix;
-        NetWorkRequest.getList(suffix, limits, getSubscriber());
+        startNetWork(NetWork.getZlApi().getList(suffix, limits, Constant.OFFSET));
     }
 
     @Override

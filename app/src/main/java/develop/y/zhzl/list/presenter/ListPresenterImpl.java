@@ -5,7 +5,8 @@ import java.util.List;
 import develop.y.zhzl.list.model.ListModel;
 import develop.y.zhzl.list.view.IListView;
 import framework.base.BasePresenterImpl;
-import framework.network.NetWorkRequest;
+import framework.data.Constant;
+import framework.network.NetWork;
 
 /**
  * by y on 2016/8/7.
@@ -38,7 +39,7 @@ public class ListPresenterImpl extends BasePresenterImpl<IListView, List<ListMod
 
     @Override
     public void netWorkRequest(String suffix, int limit) {
-        NetWorkRequest.getList(suffix, limit, getSubscriber());
+        startNetWork(NetWork.getZlApi().getList(suffix, limit, Constant.OFFSET));
     }
 
 
