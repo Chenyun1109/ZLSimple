@@ -8,8 +8,11 @@ import framework.base.BaseView;
 /**
  * by y on 2016/8/7.
  */
-public interface IListView extends BaseView {
-    void setData(List<ListModel> data);
+public interface IListView extends BaseView<List<ListModel>> {
+
+    void hideEmptyView();
+
+    void isShowEmptyView();
 
     void removeAllAdapter();
 }

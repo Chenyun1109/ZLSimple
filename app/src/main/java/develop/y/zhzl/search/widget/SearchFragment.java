@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.xadapter.adapter.XBaseAdapter;
+import com.xadapter.adapter.XRecyclerViewAdapter;
+import com.xadapter.holder.XViewHolder;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,18 +23,19 @@ import develop.y.zhzl.search.presenter.SearchPresenter;
 import develop.y.zhzl.search.presenter.SearchPresenterImpl;
 import develop.y.zhzl.search.view.SearchView;
 import framework.base.BaseFragment;
-import framework.base.BaseRecyclerViewAdapter;
 import framework.data.Constant;
 import framework.utils.ImageLoaderUtils;
 import framework.utils.UIUtils;
+import rx.Observable;
 
 /**
  * by y on 2016/8/7.
  */
 public class SearchFragment extends BaseFragment
         implements View.OnClickListener, SearchView,
-        BaseRecyclerViewAdapter.OnItemClickListener<ListModel>
-        , SearchDialog.SearchInterface {
+        XBaseAdapter.OnItemClickListener<ListModel>
+        , SearchDialog.SearchInterface,
+        XBaseAdapter.OnXBindListener<ListModel> {
 
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
@@ -39,7 +44,7 @@ public class SearchFragment extends BaseFragment
     private ProgressBar progressBar;
 
     private SearchPresenter searchPresenter;
-    private SearchAdapter adapter;
+    private XRecyclerViewAdapter<ListModel> mAdapter;
 
     @Override
     protected void initById() {
@@ -55,14 +60,13 @@ public class SearchFragment extends BaseFragment
         showExplanation();
         floatingActionButton.setOnClickListener(this);
         searchPresenter = new SearchPresenterImpl(this);
-
-        List<ListModel> list = new LinkedList<>();
-        adapter = new SearchAdapter(list);
-        adapter.setOnItemClickListener(this);
-
-        recyclerView.setHasFixedSize(true);
+        mAdapter = new XRecyclerViewAdapter<>();
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter
+                .initXData(new LinkedList<ListModel>())
+                .addRecyclerView(recyclerView)
+                .setLayoutId(R.layout.list_item)
+                .onXBind(this));
     }
 
     @Override
@@ -83,18 +87,18 @@ public class SearchFragment extends BaseFragment
     public void setData(List<ListModel> data) {
         if (!data.isEmpty()) {
             toolbar.setTitle(data.get(0).getAuthor().getName());
-            adapter.addAll(data);
+            mAdapter.addAllData(data);
         }
     }
 
     @Override
     public void adapterRemove() {
-        adapter.removeAll();
+        mAdapter.removeAll();
     }
 
     @Override
     public void suffixIsEmpty() {
-        UIUtils.SnackBar(floatingActionButton, UIUtils.getString(R.string.suffix_null));
+        UIUtils.SnackBar(floatingActionButton, getString(R.string.suffix_null));
     }
 
     @Override
@@ -109,7 +113,8 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void netWorkError() {
-        UIUtils.SnackBar(floatingActionButton, UIUtils.getString(R.string.suffix_error));
+        showExplanation();
+        UIUtils.SnackBar(floatingActionButton, getString(R.string.suffix_error));
     }
 
     @Override
@@ -123,6 +128,13 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
+    public void viewBindToLifecycle(Observable<List<ListModel>> observable) {
+        if (observable != null) {
+            observable.compose(this.<List<ListModel>>bindToLifecycle());
+        }
+    }
+
+    @Override
     public void onItemClick(View view, int position, ListModel info) {
         DetailActivity.startIntent(info.getSlug());
     }
@@ -133,22 +145,9 @@ public class SearchFragment extends BaseFragment
         searchPresenter.netWorkRequest(suffix, limit);
     }
 
-    public class SearchAdapter extends BaseRecyclerViewAdapter<ListModel> {
-
-        public SearchAdapter(List<ListModel> mDatas) {
-            super(mDatas);
-        }
-
-        @Override
-        protected int getItemLayoutId() {
-            return R.layout.list_item;
-        }
-
-        @Override
-        protected void onBind(ViewHolder holder, int position, ListModel data) {
-            holder.setTextView(R.id.list_tv, data.getTitle());
-            ImageLoaderUtils.display(UIUtils.getContext(), holder.getImageView(R.id.list_image), data.getTitleImage());
-        }
+    @Override
+    public void onXBind(XViewHolder holder, int position, ListModel listModel) {
+        holder.setTextView(R.id.list_tv, listModel.getTitle());
+        ImageLoaderUtils.display(UIUtils.getContext(), holder.getImageView(R.id.list_image), listModel.getTitleImage());
     }
-
 }

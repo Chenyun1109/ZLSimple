@@ -58,7 +58,7 @@ public class SearchDialog extends BaseDialog implements View.OnClickListener {
     }
 
 
-    public interface SearchInterface {
+    interface SearchInterface {
         void startSearch(String suffix, String limit);
     }
 

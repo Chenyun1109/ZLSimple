@@ -7,6 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.xadapter.adapter.XBaseAdapter;
+import com.xadapter.adapter.XRecyclerViewAdapter;
+import com.xadapter.holder.XViewHolder;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,28 +21,33 @@ import develop.y.zhzl.list.presenter.ListPresenter;
 import develop.y.zhzl.list.presenter.ListPresenterImpl;
 import develop.y.zhzl.list.view.IListView;
 import framework.base.BaseFragment;
-import framework.base.BaseRecyclerViewAdapter;
 import framework.data.Constant;
 import framework.utils.ImageLoaderUtils;
 import framework.utils.UIUtils;
+import rx.Observable;
+
+import static framework.data.Constant.getSuffix;
 
 /**
  * by y on 2016/8/7.
  */
 public class ListFragment extends BaseFragment
         implements SwipeRefreshLayout.OnRefreshListener, IListView,
-        BaseRecyclerViewAdapter.OnItemClickListener<ListModel>, BaseRecyclerViewAdapter.OnItemLongClickListener<ListModel> {
+        XBaseAdapter.OnXBindListener<ListModel>,
+        XBaseAdapter.OnItemClickListener<ListModel>,
+        XBaseAdapter.OnItemLongClickListener<ListModel>,
+        XBaseAdapter.OnXEmptyViewListener {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private ListPresenter listPresenter;
-    private ListAdapter adapter;
+    private XRecyclerViewAdapter<ListModel> mAdapter;
 
 
     public static ListFragment newInstance(int position, String type) {
         ListFragment listFragment = new ListFragment();
-        Bundle bundle = UIUtils.getBundle();
+        Bundle bundle = new Bundle();
         bundle.putInt(FRAGMENT_INDEX, position);
         bundle.putString(FRAGMENT_TYPE, type);
         listFragment.setArguments(bundle);
@@ -68,15 +77,19 @@ public class ListFragment extends BaseFragment
             return;
         }
         listPresenter = new ListPresenterImpl(this);
+        mAdapter = new XRecyclerViewAdapter<>();
 
-        List<ListModel> list = new LinkedList<>();
-        adapter = new ListAdapter(list);
-        adapter.setOnItemClickListener(this);
-        adapter.setOnLongClickListener(this);
-
-        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(
+                mAdapter.initXData(new LinkedList<ListModel>())
+                        .setEmptyView(getView(R.id.emptyView))
+                        .addRecyclerView(recyclerView)
+                        .setLayoutId(R.layout.list_item)
+                        .onXBind(this)
+                        .setOnItemClickListener(this)
+                        .setOnLongClickListener(this)
+                        .setOnXEmptyViewListener(this)
+        );
 
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.post(new Runnable() {
@@ -102,19 +115,37 @@ public class ListFragment extends BaseFragment
 
     @Override
     public void setData(List<ListModel> data) {
-        if (!data.isEmpty()) {
-            adapter.addAll(data);
-        }
+        mAdapter.addAllData(data);
     }
 
     @Override
     public void removeAllAdapter() {
-        adapter.removeAll();
+        mAdapter.removeAll();
     }
 
     @Override
+    public void hideEmptyView() {
+        mAdapter.hideEmptyView();
+    }
+
+    @Override
+    public void isShowEmptyView() {
+        mAdapter.isShowEmptyView();
+    }
+
+    @Override
+    public void viewBindToLifecycle(Observable<List<ListModel>> observable) {
+        if (observable != null) {
+            observable.compose(this.<List<ListModel>>bindToLifecycle());
+        }
+    }
+
+
+    @Override
     public void netWorkError() {
-        UIUtils.SnackBar(getActivity().findViewById(R.id.coordinatorLayout), UIUtils.getString(R.string.network_error));
+        isShowEmptyView();
+        if (getActivity() != null)
+            UIUtils.SnackBar(getActivity().findViewById(R.id.coordinatorLayout), getString(R.string.network_error));
     }
 
     @Override
@@ -137,46 +168,14 @@ public class ListFragment extends BaseFragment
         ListDialog.start(getContext(), getSuffix(pos, type));
     }
 
-    private String getSuffix(int position, String type) {
-        switch (type) {
-            case Constant.ZHIHU:
-                return UIUtils.getStringArray(R.array.zhihu_suffix)[position];
-
-            case Constant.MOVIE:
-                return UIUtils.getStringArray(R.array.movie_suffix)[position];
-
-            case Constant.MUSIC:
-                return UIUtils.getStringArray(R.array.music_suffix)[position];
-
-            case Constant.DEVELOP:
-                return UIUtils.getStringArray(R.array.develop_suffix)[position];
-
-            case Constant.BOOK:
-                return UIUtils.getStringArray(R.array.book_suffix)[position];
-
-            case Constant.INTERNET:
-                return UIUtils.getStringArray(R.array.internet_suffix)[position];
-            default:
-                return "";
-        }
+    @Override
+    public void onXBind(XViewHolder holder, int position, ListModel listModel) {
+        holder.setTextView(R.id.list_tv, listModel.getTitle());
+        ImageLoaderUtils.display(UIUtils.getContext(), holder.getImageView(R.id.list_image), listModel.getTitleImage());
     }
 
-    public class ListAdapter extends BaseRecyclerViewAdapter<ListModel> {
-
-        public ListAdapter(List<ListModel> mDatas) {
-            super(mDatas);
-        }
-
-        @Override
-        protected int getItemLayoutId() {
-            return R.layout.list_item;
-        }
-
-        @Override
-        protected void onBind(ViewHolder holder, int position, ListModel data) {
-            holder.setTextView(R.id.list_tv, data.getTitle());
-            ImageLoaderUtils.display(UIUtils.getContext(), holder.getImageView(R.id.list_image), data.getTitleImage());
-        }
+    @Override
+    public void onXEmptyViewClick(View view) {
+        onRefresh();
     }
-
 }

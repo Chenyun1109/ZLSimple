@@ -3,10 +3,10 @@ package framework.sql;
 import java.util.List;
 
 /**
- * by y on 2016/8/17.
+ * by y on 2016/11/22
  */
-public class GreenDaoDbUtils {
 
+public class GreenDaoDbUtils {
     public static SearchSuffixDao getSuffixDb() {
         return GreenDaoUtils.getInstance().getSearchSuffixDao();
     }

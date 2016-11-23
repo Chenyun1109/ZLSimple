@@ -39,26 +39,16 @@ public class SearchPresenterImpl extends BasePresenterImpl<SearchView, List<List
     }
 
     @Override
-    protected void showProgress() {
-        view.showProgress();
-        view.hideExplanation();
-    }
-
-    @Override
     protected void netWorkNext(List<ListModel> listModels) {
+        view.hideExplanation();
         view.adapterRemove();
-        SearchSuffixDb.insert(suffix);
         view.setData(listModels);
+        SearchSuffixDb.insert(suffix);
     }
-
-    @Override
-    protected void hideProgress() {
-        view.hideProgress();
-    }
-
 
     @Override
     public void netWorkRequest(final String suffix, String limit) {
+        view.hideExplanation();
         if (TextUtils.isEmpty(suffix)) {
             view.showExplanation();
             view.suffixIsEmpty();
@@ -71,12 +61,6 @@ public class SearchPresenterImpl extends BasePresenterImpl<SearchView, List<List
             limits = Integer.valueOf(limit);
         }
         this.suffix = suffix;
-        startNetWork(NetWork.getZlApi().getList(suffix, limits, Constant.OFFSET));
-    }
-
-    @Override
-    protected void netWorkError() {
-        view.netWorkError();
-        view.showExplanation();
+        startNetWork(observable = NetWork.getZlApi().getList(suffix, limits, Constant.OFFSET));
     }
 }

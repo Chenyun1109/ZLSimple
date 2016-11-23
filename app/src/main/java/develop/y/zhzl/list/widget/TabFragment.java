@@ -3,14 +3,13 @@ package develop.y.zhzl.list.widget;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import develop.y.zhzl.R;
 import framework.base.BaseFragment;
-import framework.data.Constant;
-import framework.utils.UIUtils;
+
+import static framework.data.Constant.getTabName;
 
 /**
  * by y on 2016/8/7.
@@ -22,7 +21,7 @@ public class TabFragment extends BaseFragment {
 
     public static TabFragment newInstance(String type) {
         TabFragment imageListTabFragment = new TabFragment();
-        Bundle bundle = UIUtils.getBundle();
+        Bundle bundle = new Bundle();
         bundle.putString(FRAGMENT_INDEX, type);
         imageListTabFragment.setArguments(bundle);
         return imageListTabFragment;
@@ -46,58 +45,27 @@ public class TabFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        viewPager.setAdapter(new TabAdapter(getChildFragmentManager()));
+        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return ListFragment.newInstance(position, type);
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return getTabName(type)[position];
+            }
+
+            @Override
+            public int getCount() {
+                return getTabName(type).length;
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_tab;
-    }
-
-    public class TabAdapter extends FragmentPagerAdapter {
-
-        private String[] name;
-
-        public TabAdapter(FragmentManager fm) {
-            super(fm);
-            switch (type) {
-                case Constant.ZHIHU:
-                    name = UIUtils.getStringArray(R.array.zhihu);
-                    break;
-                case Constant.MOVIE:
-                    name = UIUtils.getStringArray(R.array.movie);
-                    break;
-                case Constant.MUSIC:
-                    name = UIUtils.getStringArray(R.array.music);
-                    break;
-                case Constant.DEVELOP:
-                    name = UIUtils.getStringArray(R.array.develop);
-                    break;
-                case Constant.BOOK:
-                    name = UIUtils.getStringArray(R.array.book);
-                    break;
-                case Constant.INTERNET:
-                    name = UIUtils.getStringArray(R.array.internet);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return ListFragment.newInstance(position, type);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return name[position];
-        }
-
-        @Override
-        public int getCount() {
-            return name.length;
-        }
     }
 }

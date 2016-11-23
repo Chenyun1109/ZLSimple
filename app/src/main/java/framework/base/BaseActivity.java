@@ -2,8 +2,10 @@ package framework.base;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
+import develop.y.zhzl.R;
 import framework.App;
 import framework.data.Constant;
 import framework.utils.SpfUtils;
@@ -22,7 +24,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
         setContentView(getLayoutId());
         initById();
         initCreate(savedInstanceState);
-        setStatusBar();
         App.getInstance().addActivity(this);
         SwipeBackLayout swipeBackLayout = getSwipeBackLayout();
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
@@ -52,10 +53,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
         return (T) findViewById(id);
     }
 
-    protected void setStatusBar() {
-    }
-
-    @SuppressWarnings("UnusedParameters")
     protected abstract void initCreate(Bundle savedInstanceState);
 
     protected abstract void initById();
@@ -64,4 +61,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     protected abstract boolean isSwipeBackLayout();
 
+    public void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
+    }
 }

@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fa_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_menu_share"
+        app:backgroundTint="?attr/fab_color"
+        app:borderWidth="0dp"
+        app:layout_anchor="@+id/appbar"
+        app:layout_anchorGravity="bottom|end|right" />
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -47,7 +58,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyle"
@@ -68,16 +78,5 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fa_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_share"
-        app:backgroundTint="?attr/fab_color"
-        app:borderWidth="0dp"
-        app:layout_anchor="@+id/appbar"
-        app:layout_anchorGravity="bottom|end|right" />
 
 </android.support.design.widget.CoordinatorLayout>

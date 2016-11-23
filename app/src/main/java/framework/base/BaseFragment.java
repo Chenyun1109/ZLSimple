@@ -2,15 +2,16 @@ package framework.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle.components.support.RxFragment;
+
 /**
  * by y on 2016/8/7.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends RxFragment {
 
     protected boolean isLoad;
     protected boolean isPrepared;
@@ -24,7 +25,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
-            view = inflater.inflate(getLayoutId(), container, false);
+            view = getLayoutInflater(savedInstanceState).inflate(getLayoutId(), null);
             isPrepared = true;
         }
         initById();

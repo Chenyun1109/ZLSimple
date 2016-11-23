@@ -1,19 +1,21 @@
 package develop.y.zhzl.search.widget;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.xadapter.adapter.XBaseAdapter;
+import com.xadapter.adapter.XRecyclerViewAdapter;
+import com.xadapter.holder.XViewHolder;
+
 import java.util.LinkedList;
 import java.util.List;
 
 import develop.y.zhzl.R;
 import develop.y.zhzl.main.DarkViewActivity;
-import framework.base.BaseRecyclerViewAdapter;
 import framework.data.Constant;
 import framework.sql.GreenDaoDbUtils;
 import framework.sql.SearchSuffix;
@@ -23,7 +25,9 @@ import framework.utils.UIUtils;
 /**
  * by y on 2016/8/17.
  */
-public class AnnalActivity extends DarkViewActivity implements BaseRecyclerViewAdapter.OnItemClickListener<SearchSuffix> {
+public class AnnalActivity extends DarkViewActivity
+        implements XBaseAdapter.OnXBindListener<SearchSuffix>,
+        XBaseAdapter.OnItemClickListener<SearchSuffix> {
 
     private RecyclerView recyclerView;
     private TextView tvAnnal;
@@ -36,16 +40,19 @@ public class AnnalActivity extends DarkViewActivity implements BaseRecyclerViewA
     @Override
     protected void initCreate(Bundle savedInstanceState) {
         toolbar.setTitle(getString(R.string.annal_title));
+        XRecyclerViewAdapter<SearchSuffix> mAdapter = new XRecyclerViewAdapter<>();
+
         if (GreenDaoDbUtils.getSuffixAll().isEmpty()) {
             tvAnnal.setVisibility(View.VISIBLE);
         } else {
             List<SearchSuffix> list = new LinkedList<>();
-            AnnalAdapter annalAdapter = new AnnalAdapter(list);
-            annalAdapter.setOnItemClickListener(this);
-            annalAdapter.addAll(GreenDaoDbUtils.getSuffixAll());
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_GRIDVIEW, LinearLayoutManager.VERTICAL));
-            recyclerView.setAdapter(annalAdapter);
+            list.addAll(GreenDaoDbUtils.getSuffixAll());
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_GRIDVIEW, StaggeredGridLayoutManager.VERTICAL));
+            recyclerView.setAdapter(mAdapter
+                    .initXData(list)
+                    .addRecyclerView(recyclerView)
+                    .setLayoutId(R.layout.annal_item)
+                    .onXBind(this));
         }
     }
 
@@ -70,28 +77,15 @@ public class AnnalActivity extends DarkViewActivity implements BaseRecyclerViewA
     public void onItemClick(View view, int position, SearchSuffix info) {
     }
 
-    public class AnnalAdapter extends BaseRecyclerViewAdapter<SearchSuffix> {
-
-        public AnnalAdapter(List<SearchSuffix> mDatas) {
-            super(mDatas);
-        }
-
-        @Override
-        protected int getItemLayoutId() {
-            return R.layout.annal_item;
-        }
-
-        @Override
-        protected void onBind(final ViewHolder holder, int position, SearchSuffix data) {
-            holder.setTextView(R.id.tv_annal, data.getSuffix());
-            holder.get(R.id.tv_annal).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    RxBus.getInstance().send(Constant.ANNAL_TAG, holder.getTextView(R.id.tv_annal).getText().toString());
-                    finish();
-                }
-            });
-        }
+    @Override
+    public void onXBind(final XViewHolder holder, int position, SearchSuffix searchSuffix) {
+        holder.setTextView(R.id.tv_annal, searchSuffix.getSuffix());
+        holder.getTextView(R.id.tv_annal).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RxBus.getInstance().send(Constant.ANNAL_TAG, holder.getTextView(R.id.tv_annal).getText().toString());
+                finish();
+            }
+        });
     }
-
 }

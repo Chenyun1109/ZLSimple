@@ -3,11 +3,12 @@ package framework.utils.swipeback;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
 @SuppressLint("Registered")
-public class SwipeBackActivity extends AppCompatActivity implements SwipeBackActivityBase {
+public class SwipeBackActivity extends RxAppCompatActivity implements SwipeBackActivityBase {
     private SwipeBackActivityHelper mHelper;
 
     @Override

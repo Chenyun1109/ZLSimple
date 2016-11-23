@@ -17,28 +17,13 @@ public class DetailPresenterImpl extends BasePresenterImpl<DetailView, DetailMod
     }
 
     @Override
-    protected void showProgress() {
-        view.showProgress();
+    public void netWorkRequest(int slug) {
+        startNetWork(observable = NetWork.getZlApi().getDetail(slug));
     }
+
 
     @Override
     protected void netWorkNext(DetailModel detailModel) {
         view.setData(detailModel);
-    }
-
-
-    @Override
-    protected void hideProgress() {
-        view.hideProgress();
-    }
-
-    @Override
-    public void netWorkRequest(int slug) {
-        startNetWork(NetWork.getZlApi().getDetail(slug));
-    }
-
-    @Override
-    protected void netWorkError() {
-        view.netWorkError();
     }
 }

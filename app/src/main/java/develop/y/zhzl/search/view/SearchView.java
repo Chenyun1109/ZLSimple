@@ -8,9 +8,7 @@ import framework.base.BaseView;
 /**
  * by y on 2016/8/7.
  */
-public interface SearchView extends BaseView {
-    void setData(List<ListModel> data);
-
+public interface SearchView extends BaseView<List<ListModel>> {
     void adapterRemove();
 
     void suffixIsEmpty();
@@ -18,5 +16,4 @@ public interface SearchView extends BaseView {
     void showExplanation();
 
     void hideExplanation();
-
 }

@@ -20,31 +20,16 @@ public class ListPresenterImpl extends BasePresenterImpl<IListView, List<ListMod
     }
 
     @Override
-    protected void showProgress() {
-        view.showProgress();
+    public void netWorkRequest(String suffix, int limit) {
+        view.hideEmptyView();
+        startNetWork(observable = NetWork.getZlApi().getList(suffix, limit, Constant.OFFSET));
     }
+
 
     @Override
     protected void netWorkNext(List<ListModel> listModels) {
         view.removeAllAdapter();
         view.setData(listModels);
-    }
-
-
-    @Override
-    protected void hideProgress() {
-        view.hideProgress();
-    }
-
-
-    @Override
-    public void netWorkRequest(String suffix, int limit) {
-        startNetWork(NetWork.getZlApi().getList(suffix, limit, Constant.OFFSET));
-    }
-
-
-    @Override
-    protected void netWorkError() {
-        view.netWorkError();
+        view.isShowEmptyView();
     }
 }

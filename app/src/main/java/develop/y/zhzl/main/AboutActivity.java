@@ -25,21 +25,16 @@ public class AboutActivity extends DarkViewActivity {
 
     @Override
     protected void initCreate(Bundle savedInstanceState) {
+        StatusBarUtil.setTranslucentForImageView(this, imageView);
         collapsingToolbar.setTitle(getString(R.string.about));
         collapsingToolbar.setCollapsedTitleTextColor(UIUtils.getColor(R.color.white));
         collapsingToolbar.setExpandedTitleColor(UIUtils.getColor(R.color.purple));
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UIUtils.share(AboutActivity.this, UIUtils.getString(R.string.share_about));
+                UIUtils.share(AboutActivity.this, getString(R.string.share_about));
             }
         });
-    }
-
-    @Override
-    protected void setStatusBar() {
-        super.setStatusBar();
-        StatusBarUtil.setTranslucentForImageView(this, imageView);
     }
 
     @Override

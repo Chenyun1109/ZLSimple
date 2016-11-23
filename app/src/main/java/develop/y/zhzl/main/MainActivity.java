@@ -1,11 +1,9 @@
 package develop.y.zhzl.main;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -41,13 +39,14 @@ public class MainActivity extends DarkViewActivity
 
     @Override
     protected void initCreate(Bundle savedInstanceState) {
-        toolbar.setTitle(UIUtils.getString(R.string.zhihu));
+        toolbar.setTitle(getString(R.string.zhihu));
         setSupportActionBar(toolbar);
+
+        StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, 0);
         navigationView.setNavigationItemSelectedListener(this);
         replaceFragment(TabFragment.newInstance(Constant.ZHIHU));
         layoutParams = (AppBarLayout.LayoutParams) appBarLayout.getChildAt(0).getLayoutParams();
         layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
-
 
         if (SpfUtils.isTheme(Constant.DAY)) {
             imageViewTheme.setBackgroundResource(R.drawable.day);
@@ -67,12 +66,6 @@ public class MainActivity extends DarkViewActivity
 
             }
         });
-    }
-
-    @Override
-    protected void setStatusBar() {
-        super.setStatusBar();
-        StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, 0);
     }
 
     @Override
@@ -97,30 +90,24 @@ public class MainActivity extends DarkViewActivity
         return false;
     }
 
+    private long exitTime = 0;
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            if (BACK_EXIT) {
-                super.onBackPressed();
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                UIUtils.SnackBar(findViewById(R.id.coordinatorLayout), getString(R.string.exit_app));
+                exitTime = System.currentTimeMillis();
+            } else {
                 App.getInstance().exit();
-                return;
+                RxBus.getInstance().clearAllRxBus();
+                super.onBackPressed();
             }
-            BACK_EXIT = true;
-            UIUtils.SnackBar(floatingActionButton, UIUtils.getString(R.string.exit_app));
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    BACK_EXIT = false;
-                }
-            }, 2000);
         }
     }
 
-    private void replaceFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
-    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

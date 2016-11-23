@@ -6,6 +6,5 @@ import framework.base.BaseView;
 /**
  * by y on 2016/8/7.
  */
-public interface DetailView extends BaseView {
-    void setData(DetailModel data);
+public interface DetailView extends BaseView<DetailModel> {
 }

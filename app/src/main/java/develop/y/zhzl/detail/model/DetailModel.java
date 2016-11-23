@@ -3,7 +3,6 @@ package develop.y.zhzl.detail.model;
 /**
  * by y on 2016/8/7.
  */
-@SuppressWarnings("ALL")
 public class DetailModel {
     private String titleImage;
     private String title;

@@ -24,7 +24,7 @@ public class ListDialog extends BaseDialog implements View.OnClickListener {
         new ListDialog(context).initData(suffix);
     }
 
-    protected ListDialog(@NonNull Context context) {
+    private ListDialog(@NonNull Context context) {
         super(context);
     }
 

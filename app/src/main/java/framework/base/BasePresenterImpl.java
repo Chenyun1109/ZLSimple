@@ -12,37 +12,40 @@ import rx.schedulers.Schedulers;
 /**
  * by y on 2016/8/7.
  */
-public abstract class BasePresenterImpl<V, M> {
+public abstract class BasePresenterImpl<V extends BaseView<M>, M> {
 
     protected final V view;
+    protected Observable<M> observable;
 
     protected BasePresenterImpl(V view) {
         this.view = view;
     }
 
-    protected NetWorkSubscriber getSubscriber() {
+    private NetWorkSubscriber getSubscriber() {
         return new NetWorkSubscriber();
     }
 
-    private class NetWorkSubscriber extends Subscriber<M> {
+    public class NetWorkSubscriber extends Subscriber<M> {
 
         @Override
         public void onStart() {
             super.onStart();
-            showProgress();
+            view.showProgress();
         }
 
         @Override
         public void onCompleted() {
-            hideProgress();
+            view.hideProgress();
+            view.viewBindToLifecycle(observable);
         }
 
 
         @Override
         public void onError(Throwable e) {
             KLog.i(e.toString());
-            hideProgress();
-            netWorkError();
+            view.hideProgress();
+            view.netWorkError();
+            view.viewBindToLifecycle(observable);
         }
 
         @Override
@@ -52,15 +55,9 @@ public abstract class BasePresenterImpl<V, M> {
 
     }
 
-    protected abstract void showProgress();
-
     protected abstract void netWorkNext(M m);
 
-    protected abstract void hideProgress();
-
-    protected abstract void netWorkError();
-
-    public void startNetWork(Observable<M> observable) {
+    protected void startNetWork(Observable<M> observable) {
         RxUtils.unsubscribe();
         RxUtils.subscription = observable
                 .subscribeOn(Schedulers.io())

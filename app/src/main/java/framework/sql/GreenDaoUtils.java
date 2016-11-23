@@ -1,12 +1,14 @@
 package framework.sql;
 
-
 import android.database.sqlite.SQLiteDatabase;
 
 import framework.utils.UIUtils;
 
-public class GreenDaoUtils {
+/**
+ * by y on 2016/11/22
+ */
 
+public class GreenDaoUtils {
     private static DaoMaster.DevOpenHelper devOpenHelper;
     private static SQLiteDatabase sqLiteDatabase;
     private static DaoMaster daoMaster;
