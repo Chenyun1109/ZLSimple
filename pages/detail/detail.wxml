@@ -1,0 +1,4 @@
+<block>
+    <image   class="detailImage" src="{{detail.titleImage}}"  background-size="cover"/>
+    <view  class="detailTitle">{{detail.content}}</view>
+</block>

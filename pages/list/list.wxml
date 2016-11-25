@@ -1,0 +1,7 @@
+<block wx:for="{{item}}" >
+        <navigator url="../detail/detail?slug={{item.slug}}">
+                <image  bindtap="itemClick" class="titleImage" src="{{item.titleImage}}"  background-size="cover"/>
+                <text   bindtap="itemClick" class="title">{{item.title}}</text>
+                <view class="itme_view"></view>
+        </navigator>
+</block>

@@ -1,0 +1,27 @@
+<!--index.wxml-->
+<view class="container">
+  <view   class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="headerClick"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+  <text class="headerAddress">{{address}}</text>
+
+  <view class="button">
+    <text bindtap="zuimei">最美应用</text>
+  </view>
+  <view class="button">
+    <text bindtap="WebNotes">小道消息</text>
+  </view>
+  <view class="button">
+    <text bindtap="netjob">程序员的自我修养</text>
+  </view>
+  <view class="button">
+    <text bindtap="daily">知乎日报</text>
+  </view>
+  <view class="button">
+    <text bindtap="MovieDaily">MovieDaily</text>
+  </view>
+</view>

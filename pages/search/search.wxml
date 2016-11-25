@@ -1,0 +1,12 @@
+<view class="search_layout">
+    <text class="search_text">
+        如何查找专栏的suffix? \n 
+        以木易聊影为例 \n 
+        木易聊影的专栏地址为 \n 
+        https://zhuanlan.zhihu.com/happymuyi \n 
+        那么木易聊影的suffix就是happymuyi \n 
+        手机和电脑查找方法一样 \n
+    </text>
+    <input class="search_input" placeholder="请输入专栏suffix" auto-focus="true" bindinput="bindKeyInput"/>
+    <button class="search_btn" type="primary" plain="false" bindtap="startSearch">搜索</button>
+</view>

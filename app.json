@@ -1,0 +1,29 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/list/list",
+    "pages/detail/detail",
+    "pages/search/search"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#3F51B5",
+    "navigationBarTitleText": "知乎专栏小程序"
+  },
+  "tabBar": {
+      "color": "#919191",
+      "selectedColor": "#FFFFFF",
+      "backgroundColor": "#000000",
+      "list": [{
+          "pagePath": "pages/index/index",
+          "text": "内置专栏",
+          "iconPath": "image/zhuanlan_no.png",
+          "selectedIconPath": "image/zhuanlan_off.png"
+        },{
+          "pagePath": "pages/search/search",
+          "text": "搜索",
+          "iconPath": "image/search_no.png",
+          "selectedIconPath": "image/search_off.png"
+        }]
+    }
+}
