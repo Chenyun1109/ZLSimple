@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import develop.y.zhzl.BuildConfig;
+import framework.utils.RxBus;
 import framework.utils.RxUtils;
-import framework.utils.SpfUtils;
+import framework.utils.SPUtils;
 
 /**
  * by y on 2016/8/7.
@@ -29,7 +30,7 @@ public class App extends Application {
         super.onCreate();
         context = getApplicationContext();
         KLog.init(BuildConfig.LOG_DEBUG, K_LOG);
-        SpfUtils.init(getInstance());
+        SPUtils.init(getInstance());
     }
 
     public static App getInstance() {
@@ -44,6 +45,7 @@ public class App extends Application {
         for (Activity activity : activityList) {
             activity.finish();
         }
+        RxBus.getInstance().clearAllRxBus();
         RxUtils.unsubscribe();
     }
 

@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 public class CacheUitls {
 
-    public HashMap<String, Object> hashMap = new HashMap<>();
+    private HashMap<String, Object> hashMap = new HashMap<>();
 
     private static class CacheHolder {
-        public static final CacheUitls CACHE_UITLS = new CacheUitls();
+        static final CacheUitls CACHE_UITLS = new CacheUitls();
     }
 
     private CacheUitls() {

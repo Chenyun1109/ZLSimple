@@ -20,6 +20,11 @@
         <item name="shadow_bottom">@drawable/shadow_bottom</item>
     </style>
 
+    <style name="toolbarPopupTheme">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:background">?attr/toolbar_popup_background</item>
+    </style>
+
     <style name="AppTheme.Day" parent="AppTheme.NoActionBar">
         <item name="textColor">@color/text_color_day</item>
         <item name="backgroundColor">@color/background_color_day</item>
@@ -31,6 +36,7 @@
         <item name="tab_IndicatroColor">@color/tab_indicatro_color_day</item>
         <item name="head_color">@color/head_color_day</item>
         <item name="fab_color">@color/fab_color_day</item>
+        <item name="toolbar_popup_background">@color/background_color_day</item>
     </style>
 
 
@@ -45,6 +51,7 @@
         <item name="tab_IndicatroColor">@color/tab_indicatro_color_night</item>
         <item name="head_color">@color/head_color_night</item>
         <item name="fab_color">@color/fab_color_night</item>
+        <item name="toolbar_popup_background">@color/fab_color_night</item>
     </style>
 
     <style name="Theme" parent="android:Theme">

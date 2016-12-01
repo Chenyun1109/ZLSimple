@@ -1,4 +1,4 @@
-package develop.y.zhzl.main;
+package develop.y.zhzl.main.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

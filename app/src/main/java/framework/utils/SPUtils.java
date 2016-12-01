@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 
-public class SpfUtils {
+public class SPUtils {
 
     private static SharedPreferences sharedPreferences;
     private static final String SHAREDPREFERENCES_NAME = "example";

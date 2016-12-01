@@ -15,7 +15,7 @@ import develop.y.zhzl.R;
 import develop.y.zhzl.detail.model.DetailModel;
 import develop.y.zhzl.detail.presenter.DetailPresenterImpl;
 import develop.y.zhzl.detail.view.DetailView;
-import develop.y.zhzl.main.DarkViewActivity;
+import develop.y.zhzl.main.widget.DarkViewActivity;
 import framework.utils.HtmlUtils;
 import framework.utils.ImageLoaderUtils;
 import framework.utils.StatusBarUtil;

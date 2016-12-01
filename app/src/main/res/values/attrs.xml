@@ -27,5 +27,5 @@
     <attr name="tab_IndicatroColor" format="reference|color" />
     <attr name="head_color" format="reference|color" />
     <attr name="fab_color" format="reference|color" />
-
+    <attr name="toolbar_popup_background" format="reference|color" />
 </resources>

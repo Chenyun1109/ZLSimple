@@ -1,4 +1,4 @@
-package develop.y.zhzl.main;
+package develop.y.zhzl.main.widget;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;

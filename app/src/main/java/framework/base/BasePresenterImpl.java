@@ -25,7 +25,7 @@ public abstract class BasePresenterImpl<V extends BaseView<M>, M> {
         return new NetWorkSubscriber();
     }
 
-    public class NetWorkSubscriber extends Subscriber<M> {
+    private class NetWorkSubscriber extends Subscriber<M> {
 
         @Override
         public void onStart() {

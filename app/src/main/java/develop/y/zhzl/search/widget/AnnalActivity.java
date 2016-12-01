@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import develop.y.zhzl.R;
-import develop.y.zhzl.main.DarkViewActivity;
+import develop.y.zhzl.main.widget.DarkViewActivity;
 import framework.data.Constant;
 import framework.sql.GreenDaoDbUtils;
 import framework.sql.SearchSuffix;

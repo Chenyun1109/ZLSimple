@@ -1,6 +1,7 @@
-package develop.y.zhzl.main;
+package develop.y.zhzl.main.widget;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,20 +15,23 @@ import android.widget.ImageView;
 
 import develop.y.zhzl.R;
 import develop.y.zhzl.list.widget.TabFragment;
+import develop.y.zhzl.main.presenter.MainPresenter;
+import develop.y.zhzl.main.presenter.MainPresenterImpl;
+import develop.y.zhzl.main.view.MainView;
 import develop.y.zhzl.search.widget.SearchFragment;
 import framework.App;
 import framework.data.Constant;
 import framework.sql.GreenDaoDbUtils;
 import framework.utils.CacheUitls;
 import framework.utils.RxBus;
-import framework.utils.SpfUtils;
+import framework.utils.SPUtils;
 import framework.utils.StatusBarUtil;
 import framework.utils.UIUtils;
+import rx.Observable;
 import rx.functions.Action1;
 
 public class MainActivity extends DarkViewActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-    private static boolean BACK_EXIT = false;
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, MainView {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -36,26 +40,29 @@ public class MainActivity extends DarkViewActivity
     private FloatingActionButton floatingActionButton;
     private AppBarLayout.LayoutParams layoutParams;
     private ImageView imageViewTheme;
+    private MainPresenter mPresenter;
+    private Observable<Object> objectObservable;
 
     @Override
     protected void initCreate(Bundle savedInstanceState) {
         toolbar.setTitle(getString(R.string.zhihu));
         setSupportActionBar(toolbar);
-
         StatusBarUtil.setColorForDrawerLayout(this, drawerLayout, 0);
         navigationView.setNavigationItemSelectedListener(this);
         replaceFragment(TabFragment.newInstance(Constant.ZHIHU));
         layoutParams = (AppBarLayout.LayoutParams) appBarLayout.getChildAt(0).getLayoutParams();
-        layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+        mPresenter = new MainPresenterImpl(this);
 
-        if (SpfUtils.isTheme(Constant.DAY)) {
+        if (getThemeType()) {
             imageViewTheme.setBackgroundResource(R.drawable.day);
         } else {
             imageViewTheme.setBackgroundResource(R.drawable.night);
         }
 
+        objectObservable = RxBus.getInstance().toObserverable(Constant.THEME_TAG);
 
-        RxBus.getInstance().toObserverable(Constant.THEME_TAG).subscribe(new Action1<Object>() {
+
+        objectObservable.subscribe(new Action1<Object>() {
             @Override
             public void call(Object o) {
                 navigationView.getMenu().findItem(R.id.zhihu).setChecked(true);
@@ -66,6 +73,8 @@ public class MainActivity extends DarkViewActivity
 
             }
         });
+
+        allowSlide();
     }
 
     @Override
@@ -95,14 +104,14 @@ public class MainActivity extends DarkViewActivity
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+            closeDrawers();
         } else {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 UIUtils.SnackBar(findViewById(R.id.coordinatorLayout), getString(R.string.exit_app));
                 exitTime = System.currentTimeMillis();
             } else {
                 App.getInstance().exit();
-                RxBus.getInstance().clearAllRxBus();
+                RxBus.getInstance().unregister(Constant.THEME_TAG, objectObservable);
                 super.onBackPressed();
             }
         }
@@ -110,45 +119,9 @@ public class MainActivity extends DarkViewActivity
 
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        item.setChecked(true);
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         toolbar.setTitle(item.getTitle());
-        switch (item.getItemId()) {
-            case R.id.zhihu:
-                replaceFragment(TabFragment.newInstance(Constant.ZHIHU));
-                break;
-            case R.id.movie:
-                replaceFragment(TabFragment.newInstance(Constant.MOVIE));
-                break;
-            case R.id.music:
-                replaceFragment(TabFragment.newInstance(Constant.MUSIC));
-                break;
-            case R.id.develop:
-                replaceFragment(TabFragment.newInstance(Constant.DEVELOP));
-                break;
-            case R.id.book:
-                replaceFragment(TabFragment.newInstance(Constant.BOOK));
-                break;
-            case R.id.internet:
-                replaceFragment(TabFragment.newInstance(Constant.INTERNET));
-                break;
-            case R.id.search:
-                replaceFragment(new SearchFragment());
-                break;
-            default:
-                break;
-        }
-        switch (item.getItemId()) {
-            case R.id.search:
-                showFAB();
-                layoutParams.setScrollFlags(0);
-                break;
-            default:
-                hideFAB();
-                layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
-                break;
-        }
-        drawerLayout.closeDrawers();
+        mPresenter.switchId(item.getItemId());
         return true;
     }
 
@@ -160,44 +133,100 @@ public class MainActivity extends DarkViewActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.about:
-                AboutActivity.startIntent();
-                break;
-        }
+        mPresenter.switchId(item.getItemId());
         return super.onOptionsItemSelected(item);
     }
 
 
-    private void showFAB() {
+    @Override
+    public void onClick(View view) {
+        mPresenter.switchOnClickId(view.getId());
+    }
+
+    @Override
+    public void switchZhihu() {
+        replaceFragment(TabFragment.newInstance(Constant.ZHIHU));
+    }
+
+    @Override
+    public void switchMovie() {
+        replaceFragment(TabFragment.newInstance(Constant.MOVIE));
+    }
+
+    @Override
+    public void switchMusic() {
+        replaceFragment(TabFragment.newInstance(Constant.MUSIC));
+    }
+
+    @Override
+    public void switchDevelop() {
+        replaceFragment(TabFragment.newInstance(Constant.DEVELOP));
+    }
+
+    @Override
+    public void switchBook() {
+        replaceFragment(TabFragment.newInstance(Constant.BOOK));
+    }
+
+    @Override
+    public void switchInternet() {
+        replaceFragment(TabFragment.newInstance(Constant.INTERNET));
+    }
+
+    @Override
+    public void switchSearch() {
+        replaceFragment(new SearchFragment());
+    }
+
+    @Override
+    public void switchAbout() {
+        AboutActivity.startIntent();
+    }
+
+    @Override
+    public void showFAB() {
         floatingActionButton.setVisibility(View.VISIBLE);
     }
 
-    private void hideFAB() {
+    @Override
+    public void hideFAB() {
         floatingActionButton.setVisibility(View.GONE);
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_head:
-                drawerLayout.closeDrawers();
-                GreenDaoDbUtils.clear();
-                UIUtils.SnackBar(floatingActionButton, getString(R.string.clear_db));
-                break;
-            case R.id.iv:
-                if (getThemeType()) {
-                    imageViewTheme.setBackgroundResource(R.drawable.night);
-                    setTheme(Constant.NIGHT_STYLES);
-                    SpfUtils.setTheme(Constant.NIGHT);
-                } else {
-                    imageViewTheme.setBackgroundResource(R.drawable.day);
-                    setTheme(Constant.DAY_STYLES);
-                    SpfUtils.setTheme(Constant.DAY);
-                }
-                CacheUitls.getInstance().put(Constant.BITMAP_CACHE_KEY, UIUtils.captureContent(this));
-                TransitionActivity.startIntent();
-                break;
+    public void notSlide() {
+        layoutParams.setScrollFlags(0);
+    }
+
+    @Override
+    public void allowSlide() {
+        layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+    }
+
+    @Override
+    public void closeDrawers() {
+        drawerLayout.closeDrawers();
+    }
+
+    @Override
+    public void clearDB() {
+        drawerLayout.closeDrawers();
+        GreenDaoDbUtils.clear();
+        UIUtils.SnackBar(floatingActionButton, getString(R.string.clear_db));
+    }
+
+    @Override
+    public void alterTheme() {
+        if (getThemeType()) {
+            imageViewTheme.setBackgroundResource(R.drawable.night);
+            setTheme(Constant.NIGHT_STYLES);
+            SPUtils.setTheme(Constant.NIGHT);
+        } else {
+            imageViewTheme.setBackgroundResource(R.drawable.day);
+            setTheme(Constant.DAY_STYLES);
+            SPUtils.setTheme(Constant.DAY);
         }
+        CacheUitls.getInstance().put(Constant.BITMAP_CACHE_KEY, UIUtils.captureContent(this));
+        TransitionActivity.startIntent();
     }
 }

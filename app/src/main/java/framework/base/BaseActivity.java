@@ -8,7 +8,7 @@ import android.view.View;
 import develop.y.zhzl.R;
 import framework.App;
 import framework.data.Constant;
-import framework.utils.SpfUtils;
+import framework.utils.SPUtils;
 import framework.utils.swipeback.SwipeBackActivity;
 import framework.utils.swipeback.SwipeBackLayout;
 
@@ -44,7 +44,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     public boolean getThemeType() {
-        return SpfUtils.isTheme(Constant.DAY);
+        return SPUtils.isTheme(Constant.DAY);
     }
 
 
