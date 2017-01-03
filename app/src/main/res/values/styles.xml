@@ -21,8 +21,9 @@
     </style>
 
     <style name="toolbarPopupTheme">
-        <item name="android:textColor">?attr/textColor</item>
-        <item name="android:background">?attr/toolbar_popup_background</item>
+        <!--  这里不能设置textColor和background ,否则会有问题,根据源码可以看到设置 textColorPrimary and colorBackground 是正确的选择 -->
+        <item name="android:textColorPrimary">?attr/textColor</item>
+        <item name="android:colorBackground">?attr/toolbar_popup_background</item>
     </style>
 
     <style name="AppTheme.Day" parent="AppTheme.NoActionBar">
@@ -51,7 +52,7 @@
         <item name="tab_IndicatroColor">@color/tab_indicatro_color_night</item>
         <item name="head_color">@color/head_color_night</item>
         <item name="fab_color">@color/fab_color_night</item>
-        <item name="toolbar_popup_background">@color/fab_color_night</item>
+        <item name="toolbar_popup_background">@color/background_color_night</item>
     </style>
 
     <style name="Theme" parent="android:Theme">
@@ -73,6 +74,5 @@
         <item name="android:taskToBackEnterAnimation">@null</item>
         <item name="android:taskToBackExitAnimation">@null</item>
     </style>
-
 
 </resources>
