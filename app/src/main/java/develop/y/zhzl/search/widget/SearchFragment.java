@@ -63,7 +63,7 @@ public class SearchFragment extends BaseFragment
         mAdapter = new XRecyclerViewAdapter<>();
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter
-                .initXData(new LinkedList<ListModel>())
+                .initXData(new LinkedList<>())
                 .addRecyclerView(recyclerView)
                 .setLayoutId(R.layout.list_item)
                 .onXBind(this));
@@ -130,7 +130,7 @@ public class SearchFragment extends BaseFragment
     @Override
     public void viewBindToLifecycle(Observable<List<ListModel>> observable) {
         if (observable != null) {
-            observable.compose(this.<List<ListModel>>bindToLifecycle());
+            observable.compose(this.bindToLifecycle());
         }
     }
 

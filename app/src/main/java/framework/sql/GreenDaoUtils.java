@@ -1,5 +1,6 @@
 package framework.sql;
 
+import android.annotation.SuppressLint;
 import android.database.sqlite.SQLiteDatabase;
 
 import framework.utils.UIUtils;
@@ -9,6 +10,7 @@ import framework.utils.UIUtils;
  */
 
 public class GreenDaoUtils {
+    @SuppressLint("StaticFieldLeak")
     private static DaoMaster.DevOpenHelper devOpenHelper;
     private static SQLiteDatabase sqLiteDatabase;
     private static DaoMaster daoMaster;

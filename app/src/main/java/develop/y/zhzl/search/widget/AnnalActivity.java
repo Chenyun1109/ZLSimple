@@ -80,12 +80,9 @@ public class AnnalActivity extends DarkViewActivity
     @Override
     public void onXBind(final XViewHolder holder, int position, SearchSuffix searchSuffix) {
         holder.setTextView(R.id.tv_annal, searchSuffix.getSuffix());
-        holder.getTextView(R.id.tv_annal).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RxBus.getInstance().send(Constant.ANNAL_TAG, holder.getTextView(R.id.tv_annal).getText().toString());
-                finish();
-            }
+        holder.getTextView(R.id.tv_annal).setOnClickListener(view -> {
+            RxBus.getInstance().send(Constant.ANNAL_TAG, holder.getTextView(R.id.tv_annal).getText().toString());
+            finish();
         });
     }
 }

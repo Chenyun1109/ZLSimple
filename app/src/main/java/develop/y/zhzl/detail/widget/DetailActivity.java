@@ -85,12 +85,7 @@ public class DetailActivity extends DarkViewActivity
         webView.loadDataWithBaseURL(null, HtmlUtils.getHtml(data.getContent()), HtmlUtils.getMimeType(), HtmlUtils.getCoding(), null);
         ImageLoaderUtils.display(this, imageView, data.getTitleImage());
         collapsingToolbar.setTitle(data.getTitle());
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UIUtils.share(DetailActivity.this, getString(R.string.detail_share) + data.getAuthor().getProfileUrl());
-            }
-        });
+        floatingActionButton.setOnClickListener(view -> UIUtils.share(DetailActivity.this, getString(R.string.detail_share) + data.getAuthor().getProfileUrl()));
     }
 
     @Override
@@ -111,7 +106,7 @@ public class DetailActivity extends DarkViewActivity
     @Override
     public void viewBindToLifecycle(Observable<DetailModel> observable) {
         if (observable != null) {
-            observable.compose(this.<DetailModel>bindToLifecycle());
+            observable.compose(this.bindToLifecycle());
         }
     }
 }

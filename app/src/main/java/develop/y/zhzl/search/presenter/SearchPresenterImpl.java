@@ -13,7 +13,6 @@ import framework.data.Constant;
 import framework.network.NetWork;
 import framework.sql.SearchSuffixDb;
 import framework.utils.RxBus;
-import rx.functions.Action1;
 
 /**
  * by y on 2016/8/7.
@@ -25,16 +24,10 @@ public class SearchPresenterImpl extends BasePresenterImpl<SearchView, List<List
 
     public SearchPresenterImpl(SearchView view) {
         super(view);
-        RxBus.getInstance().toObserverable(Constant.ANNAL_TAG).subscribe(new Action1<Object>() {
-            @Override
-            public void call(Object object) {
-                netWorkRequest((String) object, "");
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                KLog.i(throwable.toString());
-            }
+        RxBus.getInstance().toObserverable(Constant.ANNAL_TAG).subscribe(object -> {
+            netWorkRequest((String) object, "");
+        }, throwable -> {
+            KLog.i(throwable.toString());
         });
     }
 

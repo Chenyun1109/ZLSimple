@@ -92,8 +92,8 @@ public class UIUtils {
         Rect frame = new Rect();
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
         int statusBarHeight = frame.top;
-        int width = activity.getWindowManager().getDefaultDisplay().getWidth();
-        int height = activity.getWindowManager().getDefaultDisplay().getHeight();
+        @SuppressWarnings("deprecation") int width = activity.getWindowManager().getDefaultDisplay().getWidth();
+        @SuppressWarnings("deprecation") int height = activity.getWindowManager().getDefaultDisplay().getHeight();
         Bitmap b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height - statusBarHeight);
         view.destroyDrawingCache();
         return b;

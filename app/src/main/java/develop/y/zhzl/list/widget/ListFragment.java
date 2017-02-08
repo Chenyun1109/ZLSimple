@@ -81,7 +81,7 @@ public class ListFragment extends BaseFragment
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(
-                mAdapter.initXData(new LinkedList<ListModel>())
+                mAdapter.initXData(new LinkedList<>())
                         .setEmptyView(getView(R.id.emptyView))
                         .addRecyclerView(recyclerView)
                         .setLayoutId(R.layout.list_item)
@@ -92,12 +92,7 @@ public class ListFragment extends BaseFragment
         );
 
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                onRefresh();
-            }
-        });
+        swipeRefreshLayout.post(this::onRefresh);
         setLoad();
     }
 
@@ -136,7 +131,7 @@ public class ListFragment extends BaseFragment
     @Override
     public void viewBindToLifecycle(Observable<List<ListModel>> observable) {
         if (observable != null) {
-            observable.compose(this.<List<ListModel>>bindToLifecycle());
+            observable.compose(this.bindToLifecycle());
         }
     }
 

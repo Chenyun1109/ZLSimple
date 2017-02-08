@@ -49,6 +49,7 @@ public class ListDialog extends BaseDialog implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_list:
                 ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                //noinspection deprecation
                 cm.setText(suffix);
                 UIUtils.Toast(getString(R.string.suffix_copy));
                 dismiss();

@@ -15,7 +15,7 @@ import rx.subjects.Subject;
  */
 public class RxBus {
 
-    private ArrayMap<Object, List<Subject>> rxMap;
+    private final ArrayMap<Object, List<Subject>> rxMap;
     private List<Subject> rxList;
 
     private RxBus() {
@@ -38,6 +38,7 @@ public class RxBus {
         List<Subject> subjects = rxMap.get(tag);
         if (null != subjects && !subjects.isEmpty()) {
             for (Subject s : subjects) {
+                //noinspection unchecked
                 s.onNext(object);
             }
         }
@@ -46,6 +47,7 @@ public class RxBus {
     public void unregister(@NonNull Object tag, @NonNull Observable observable) {
         List<Subject> subjects = rxMap.get(tag);
         if (null != subjects) {
+            //noinspection SuspiciousMethodCalls
             subjects.remove(observable);
             if (subjects.isEmpty()) {
                 rxMap.remove(tag);

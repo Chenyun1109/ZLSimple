@@ -64,4 +64,10 @@ public abstract class BaseActivity extends SwipeBackActivity {
     public void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.getInstance().removeActivity(this);
+    }
 }

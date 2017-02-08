@@ -60,7 +60,7 @@
             android:background="?android:selectableItemBackground"
             android:text="@string/dialog_ok"
             android:textColor="?attr/textColor"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
         <Button
             android:id="@+id/btn_annal"

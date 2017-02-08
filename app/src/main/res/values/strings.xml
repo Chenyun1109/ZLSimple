@@ -40,6 +40,6 @@
     <string name="annal_title">搜索历史</string>
     <string name="clear_db">清除数据库成功</string>
     <string name="emptyView">没有数据，点击重试</string>
-    <string name="x">取消</string>
+    <string name="app_api_n">app有侵犯知乎权益的嫌疑,若被告知禁止使用api,本人会删除相关的东西以及代码 \n 请遵守知乎协议</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package framework;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -23,6 +24,7 @@ public class App extends Application {
 
     private final List<Activity> activityList = new ArrayList<>();
 
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
 
     @Override
@@ -53,5 +55,9 @@ public class App extends Application {
         for (Activity activity : activityList) {
             activity.recreate();
         }
+    }
+
+    public void removeActivity(Activity activity) {
+        activityList.remove(activity);
     }
 }

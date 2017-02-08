@@ -3,7 +3,6 @@ package develop.y.zhzl.main.widget;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.view.View;
 import android.widget.ImageView;
 
 import develop.y.zhzl.R;
@@ -29,12 +28,7 @@ public class AboutActivity extends DarkViewActivity {
         collapsingToolbar.setTitle(getString(R.string.about));
         collapsingToolbar.setCollapsedTitleTextColor(UIUtils.getColor(R.color.white));
         collapsingToolbar.setExpandedTitleColor(UIUtils.getColor(R.color.purple));
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UIUtils.share(AboutActivity.this, getString(R.string.share_about));
-            }
-        });
+        floatingActionButton.setOnClickListener(view -> UIUtils.share(AboutActivity.this, getString(R.string.share_about)));
     }
 
     @Override

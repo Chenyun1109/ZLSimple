@@ -28,7 +28,6 @@ import framework.utils.SPUtils;
 import framework.utils.StatusBarUtil;
 import framework.utils.UIUtils;
 import rx.Observable;
-import rx.functions.Action1;
 
 public class MainActivity extends DarkViewActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, MainView {
@@ -62,16 +61,10 @@ public class MainActivity extends DarkViewActivity
         objectObservable = RxBus.getInstance().toObserverable(Constant.THEME_TAG);
 
 
-        objectObservable.subscribe(new Action1<Object>() {
-            @Override
-            public void call(Object o) {
-                navigationView.getMenu().findItem(R.id.zhihu).setChecked(true);
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
+        objectObservable.subscribe(o -> {
+            navigationView.getMenu().findItem(R.id.zhihu).setChecked(true);
+        }, throwable -> {
 
-            }
         });
 
         allowSlide();

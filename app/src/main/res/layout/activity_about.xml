@@ -53,7 +53,7 @@
                 android:layout_marginTop="@dimen/head_marginTop"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/padding"
-                android:text="app有侵犯知乎权益的嫌疑,若被告知禁止使用api,本人会删除相关的东西以及代码 \n 请遵守知乎协议"
+                android:text="@string/app_api_n"
                 android:textColor="?attr/textColor" />
 
             <TextView

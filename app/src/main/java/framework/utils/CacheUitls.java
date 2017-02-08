@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class CacheUitls {
 
-    private HashMap<String, Object> hashMap = new HashMap<>();
+    private final HashMap<String, Object> hashMap = new HashMap<>();
 
     private static class CacheHolder {
         static final CacheUitls CACHE_UITLS = new CacheUitls();
@@ -23,6 +23,7 @@ public class CacheUitls {
     }
 
     public <T> T get(String key) {
+        //noinspection unchecked
         return (T) hashMap.get(key);
     }
 
