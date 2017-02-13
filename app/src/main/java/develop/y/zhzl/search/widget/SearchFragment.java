@@ -148,6 +148,6 @@ public class SearchFragment extends BaseFragment
     @Override
     public void onXBind(XViewHolder holder, int position, ListModel listModel) {
         holder.setTextView(R.id.list_tv, listModel.getTitle());
-        ImageLoaderUtils.display(UIUtils.getContext(), holder.getImageView(R.id.list_image), listModel.getTitleImage());
+        ImageLoaderUtils.display(holder.getImageView(R.id.list_image), listModel.getTitleImage());
     }
 }

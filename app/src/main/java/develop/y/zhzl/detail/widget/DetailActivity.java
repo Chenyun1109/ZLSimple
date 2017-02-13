@@ -83,7 +83,7 @@ public class DetailActivity extends DarkViewActivity
     @Override
     public void setData(final DetailModel data) {
         webView.loadDataWithBaseURL(null, HtmlUtils.getHtml(data.getContent()), HtmlUtils.getMimeType(), HtmlUtils.getCoding(), null);
-        ImageLoaderUtils.display(this, imageView, data.getTitleImage());
+        ImageLoaderUtils.display(imageView, data.getTitleImage());
         collapsingToolbar.setTitle(data.getTitle());
         floatingActionButton.setOnClickListener(view -> UIUtils.share(DetailActivity.this, getString(R.string.detail_share) + data.getAuthor().getProfileUrl()));
     }
