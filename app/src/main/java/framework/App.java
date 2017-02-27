@@ -5,14 +5,15 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.rxnetwork.bus.RxBus;
+import com.rxnetwork.manager.RxNetWork;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import develop.y.zhzl.BuildConfig;
-import framework.utils.RxBus;
-import framework.utils.RxUtils;
+import framework.api.Api;
 import framework.utils.SPUtils;
 
 /**
@@ -33,6 +34,7 @@ public class App extends Application {
         context = getApplicationContext();
         KLog.init(BuildConfig.LOG_DEBUG, K_LOG);
         SPUtils.init(getInstance());
+        RxNetWork.getInstance().setBaseUrl(Api.BASE_API);
     }
 
     public static App getInstance() {
@@ -47,8 +49,9 @@ public class App extends Application {
         for (Activity activity : activityList) {
             activity.finish();
         }
-        RxBus.getInstance().clearAllRxBus();
-        RxUtils.unsubscribe();
+        RxNetWork.getInstance().clearSubscription();
+        RxBus.getInstance().unregisterAll();
+        RxNetWork.getInstance().clearSubscription();
     }
 
     public void refreshAllActivity() {

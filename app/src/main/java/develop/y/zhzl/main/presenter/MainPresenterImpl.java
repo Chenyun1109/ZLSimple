@@ -9,7 +9,7 @@ import develop.y.zhzl.main.view.MainView;
 
 public class MainPresenterImpl implements MainPresenter {
 
-    private final MainView mainView;
+    private MainView mainView;
 
     public MainPresenterImpl(MainView mainView) {
         this.mainView = mainView;
@@ -67,4 +67,5 @@ public class MainPresenterImpl implements MainPresenter {
                 break;
         }
     }
+
 }

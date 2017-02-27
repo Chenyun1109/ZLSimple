@@ -42,7 +42,7 @@ public class DetailModel {
         this.content = content;
     }
 
-    public class Author {
+    public static class Author {
         private String profileUrl;
         private String bio;
         private String name;

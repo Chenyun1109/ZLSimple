@@ -4,3 +4,5 @@
 /.idea/
 /build/
 /app/build/
+.DS_Store
+app/.DS_Store

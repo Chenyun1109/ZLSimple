@@ -24,12 +24,10 @@ public class HtmlUtils {
                 + "</body>\n</html>";
     }
 
-    @SuppressWarnings("SameReturnValue")
     public static String getCoding() {
         return "utf-8";
     }
 
-    @SuppressWarnings("SameReturnValue")
     public static String getMimeType() {
         return "text/html";
     }

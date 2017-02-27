@@ -20,7 +20,6 @@ import framework.utils.HtmlUtils;
 import framework.utils.ImageLoaderUtils;
 import framework.utils.StatusBarUtil;
 import framework.utils.UIUtils;
-import rx.Observable;
 
 /**
  * by y on 2016/8/7.
@@ -48,7 +47,8 @@ public class DetailActivity extends DarkViewActivity
         collapsingToolbar.setCollapsedTitleTextColor(UIUtils.getColor(R.color.white));
         collapsingToolbar.setExpandedTitleColor(UIUtils.getColor(R.color.purple));
         initWebView();
-        new DetailPresenterImpl(this).netWorkRequest(getIntent().getExtras().getInt(BUNDLE_TYPE));
+        DetailPresenterImpl presenter = new DetailPresenterImpl(this);
+        presenter.netWorkRequest(getIntent().getExtras().getInt(BUNDLE_TYPE));
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -60,6 +60,7 @@ public class DetailActivity extends DarkViewActivity
         settings.setDomStorageEnabled(true);
         settings.setAppCacheEnabled(false);
     }
+
 
     @Override
     protected void initById() {
@@ -81,19 +82,6 @@ public class DetailActivity extends DarkViewActivity
     }
 
     @Override
-    public void setData(final DetailModel data) {
-        webView.loadDataWithBaseURL(null, HtmlUtils.getHtml(data.getContent()), HtmlUtils.getMimeType(), HtmlUtils.getCoding(), null);
-        ImageLoaderUtils.display(imageView, data.getTitleImage());
-        collapsingToolbar.setTitle(data.getTitle());
-        floatingActionButton.setOnClickListener(view -> UIUtils.share(DetailActivity.this, getString(R.string.detail_share) + data.getAuthor().getProfileUrl()));
-    }
-
-    @Override
-    public void netWorkError() {
-        UIUtils.SnackBar(findViewById(R.id.coordinatorLayout), getString(R.string.network_error));
-    }
-
-    @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -104,9 +92,16 @@ public class DetailActivity extends DarkViewActivity
     }
 
     @Override
-    public void viewBindToLifecycle(Observable<DetailModel> observable) {
-        if (observable != null) {
-            observable.compose(this.bindToLifecycle());
-        }
+    public void rxNetWorkError(Throwable e) {
+        UIUtils.SnackBar(findViewById(R.id.coordinatorLayout), getString(R.string.network_error));
     }
+
+    @Override
+    public void rxNetWorkSuccess(DetailModel mData) {
+        webView.loadDataWithBaseURL(null, HtmlUtils.getHtml(mData.getContent()), HtmlUtils.getMimeType(), HtmlUtils.getCoding(), null);
+        ImageLoaderUtils.display(imageView, mData.getTitleImage());
+        collapsingToolbar.setTitle(mData.getTitle());
+        floatingActionButton.setOnClickListener(view -> UIUtils.share(DetailActivity.this, getString(R.string.detail_share) + mData.getAuthor().getProfileUrl()));
+    }
+
 }

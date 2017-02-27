@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.rxnetwork.bus.RxBus;
+import com.socks.library.KLog;
 import com.xadapter.adapter.XBaseAdapter;
 import com.xadapter.adapter.XRecyclerViewAdapter;
 import com.xadapter.holder.XViewHolder;
@@ -19,7 +21,6 @@ import develop.y.zhzl.main.widget.DarkViewActivity;
 import framework.data.Constant;
 import framework.sql.GreenDaoDbUtils;
 import framework.sql.SearchSuffix;
-import framework.utils.RxBus;
 import framework.utils.UIUtils;
 
 /**
@@ -79,6 +80,7 @@ public class AnnalActivity extends DarkViewActivity
 
     @Override
     public void onXBind(final XViewHolder holder, int position, SearchSuffix searchSuffix) {
+        KLog.i(searchSuffix.getSuffix());
         holder.setTextView(R.id.tv_annal, searchSuffix.getSuffix());
         holder.getTextView(R.id.tv_annal).setOnClickListener(view -> {
             RxBus.getInstance().send(Constant.ANNAL_TAG, holder.getTextView(R.id.tv_annal).getText().toString());

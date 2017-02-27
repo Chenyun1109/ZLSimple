@@ -17,7 +17,7 @@ public class GreenDaoUtils {
     private static final String SQL_NAME = "zlsuffix";
 
     private static class SessionHolder {
-        public static final DaoSession daoSession = getDaoMaster().newSession();
+        static final DaoSession daoSession = getDaoMaster().newSession();
     }
 
     public static DaoSession getInstance() {

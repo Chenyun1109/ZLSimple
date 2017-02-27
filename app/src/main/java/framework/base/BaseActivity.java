@@ -5,22 +5,24 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.backlayout.SwipeBackActivity;
+import com.backlayout.SwipeBackLayout;
+
 import develop.y.zhzl.R;
 import framework.App;
 import framework.data.Constant;
 import framework.utils.SPUtils;
-import framework.utils.swipeback.SwipeBackActivity;
-import framework.utils.swipeback.SwipeBackLayout;
 
 /**
  * by y on 2016/8/7.
  */
 public abstract class BaseActivity extends SwipeBackActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initTheme();
+        setTheme(getThemeType() ? Constant.DAY_STYLES : Constant.NIGHT_STYLES);
         setContentView(getLayoutId());
         initById();
         initCreate(savedInstanceState);
@@ -32,14 +34,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
             swipeBackLayout.setEdgeDp(100);
         } else {
             swipeBackLayout.setEnableGesture(false);
-        }
-    }
-
-    protected void initTheme() {
-        if (getThemeType()) {
-            setTheme(Constant.DAY_STYLES);
-        } else {
-            setTheme(Constant.NIGHT_STYLES);
         }
     }
 
@@ -60,6 +54,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     protected abstract int getLayoutId();
 
     protected abstract boolean isSwipeBackLayout();
+
 
     public void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, fragment).commit();

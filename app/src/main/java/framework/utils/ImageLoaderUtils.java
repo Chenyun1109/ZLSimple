@@ -14,7 +14,6 @@ import develop.y.zhzl.R;
 /**
  * by y on 2016/8/7.
  */
-@SuppressWarnings("ALL")
 public class ImageLoaderUtils {
 
     public static void display(ImageView imageView, String url, int placeholder, int error) {

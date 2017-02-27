@@ -22,3 +22,22 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+ext {
+    compileSdkVersion = 25
+    buildToolsVersion = '25.0.0'
+    minSdkVersion = 15
+    targetSdkVersion = 25
+    projectVersionCode = 24
+    projectVersionName = '1.0'
+
+    supportLibraryVersion = '25.0.0'
+    glideVersion = '3.7.0'
+    rxJavaVersion = '1.2.6'
+    rxAndroidVersion = '1.2.1'
+    retrofit2Version = '2.1.0'
+    retrofitGsonVersion = '2.1.0'
+    retrofitRxJavaVersion = '2.1.0'
+
+    klogVersion = '1.6.0'
+    greendao3xVersion = '3.2.0'
+}

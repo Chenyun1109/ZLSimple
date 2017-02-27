@@ -13,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.rxnetwork.bus.RxBus;
+import com.rxnetwork.bus.RxBusCallBack;
+
 import develop.y.zhzl.R;
 import develop.y.zhzl.list.widget.TabFragment;
 import develop.y.zhzl.main.presenter.MainPresenter;
@@ -23,14 +26,15 @@ import framework.App;
 import framework.data.Constant;
 import framework.sql.GreenDaoDbUtils;
 import framework.utils.CacheUitls;
-import framework.utils.RxBus;
 import framework.utils.SPUtils;
 import framework.utils.StatusBarUtil;
 import framework.utils.UIUtils;
-import rx.Observable;
 
 public class MainActivity extends DarkViewActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, MainView {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener,
+        MainView,
+        RxBusCallBack<String> {
 
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -40,7 +44,6 @@ public class MainActivity extends DarkViewActivity
     private AppBarLayout.LayoutParams layoutParams;
     private ImageView imageViewTheme;
     private MainPresenter mPresenter;
-    private Observable<Object> objectObservable;
 
     @Override
     protected void initCreate(Bundle savedInstanceState) {
@@ -51,22 +54,8 @@ public class MainActivity extends DarkViewActivity
         replaceFragment(TabFragment.newInstance(Constant.ZHIHU));
         layoutParams = (AppBarLayout.LayoutParams) appBarLayout.getChildAt(0).getLayoutParams();
         mPresenter = new MainPresenterImpl(this);
-
-        if (getThemeType()) {
-            imageViewTheme.setBackgroundResource(R.drawable.day);
-        } else {
-            imageViewTheme.setBackgroundResource(R.drawable.night);
-        }
-
-        objectObservable = RxBus.getInstance().toObserverable(Constant.THEME_TAG);
-
-
-        objectObservable.subscribe(o -> {
-            navigationView.getMenu().findItem(R.id.zhihu).setChecked(true);
-        }, throwable -> {
-
-        });
-
+        imageViewTheme.setBackgroundResource(getThemeType() ? R.drawable.day : R.drawable.night);
+        RxBus.getInstance().toSubscription(Constant.THEME_TAG, String.class, this);
         allowSlide();
     }
 
@@ -104,7 +93,6 @@ public class MainActivity extends DarkViewActivity
                 exitTime = System.currentTimeMillis();
             } else {
                 App.getInstance().exit();
-                RxBus.getInstance().unregister(Constant.THEME_TAG, objectObservable);
                 super.onBackPressed();
             }
         }
@@ -129,7 +117,6 @@ public class MainActivity extends DarkViewActivity
         mPresenter.switchId(item.getItemId());
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onClick(View view) {
@@ -210,16 +197,21 @@ public class MainActivity extends DarkViewActivity
 
     @Override
     public void alterTheme() {
-        if (getThemeType()) {
-            imageViewTheme.setBackgroundResource(R.drawable.night);
-            setTheme(Constant.NIGHT_STYLES);
-            SPUtils.setTheme(Constant.NIGHT);
-        } else {
-            imageViewTheme.setBackgroundResource(R.drawable.day);
-            setTheme(Constant.DAY_STYLES);
-            SPUtils.setTheme(Constant.DAY);
-        }
+        imageViewTheme.setBackgroundResource(getThemeType() ? R.drawable.day : R.drawable.night);
+        setTheme(getThemeType() ? Constant.NIGHT_STYLES : Constant.DAY_STYLES);
+        SPUtils.setTheme(getThemeType() ? Constant.NIGHT : Constant.DAY);
         CacheUitls.getInstance().put(Constant.BITMAP_CACHE_KEY, UIUtils.captureContent(this));
         TransitionActivity.startIntent();
+    }
+
+    @Override
+    public void onNext(String data) {
+        navigationView.getMenu().findItem(R.id.zhihu).setChecked(true);
+        RxBus.getInstance().unregister(Constant.THEME_TAG);
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+
     }
 }

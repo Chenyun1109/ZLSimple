@@ -1,29 +1,32 @@
 package develop.y.zhzl.detail.presenter;
 
 
+import com.rxnetwork.manager.RxNetWork;
+import framework.mvp.PresenterCompat;
+
 import develop.y.zhzl.detail.model.DetailModel;
 import develop.y.zhzl.detail.view.DetailView;
-import framework.base.BasePresenterImpl;
-import framework.network.NetWork;
+import framework.api.Api;
 
 /**
  * by y on 2016/8/7.
  */
-public class DetailPresenterImpl extends BasePresenterImpl<DetailView, DetailModel> implements DetailPresenter {
+public class DetailPresenterImpl extends PresenterCompat<DetailModel, DetailView> implements DetailPresenter {
 
+    public DetailPresenterImpl(DetailView mView) {
+        super(mView);
+    }
 
-    public DetailPresenterImpl(DetailView view) {
-        super(view);
+    @Override
+    protected void onNetWorkNext(DetailModel data) {
+        getView().rxNetWorkSuccess(data);
     }
 
     @Override
     public void netWorkRequest(int slug) {
-        startNetWork(observable = NetWork.getZlApi().getDetail(slug));
+        RxNetWork.
+                getInstance().
+                getApi(RxNetWork.observable(Api.ZLService.class).getDetail(slug), this);
     }
 
-
-    @Override
-    protected void netWorkNext(DetailModel detailModel) {
-        view.setData(detailModel);
-    }
 }

@@ -1,7 +1,8 @@
 package develop.y.zhzl.detail.view;
 
+import framework.mvp.BaseView;
+
 import develop.y.zhzl.detail.model.DetailModel;
-import framework.base.BaseView;
 
 /**
  * by y on 2016/8/7.

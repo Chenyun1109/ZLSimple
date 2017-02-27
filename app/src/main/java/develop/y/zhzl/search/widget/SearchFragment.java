@@ -19,19 +19,17 @@ import java.util.List;
 import develop.y.zhzl.R;
 import develop.y.zhzl.detail.widget.DetailActivity;
 import develop.y.zhzl.list.model.ListModel;
-import develop.y.zhzl.search.presenter.SearchPresenter;
 import develop.y.zhzl.search.presenter.SearchPresenterImpl;
 import develop.y.zhzl.search.view.SearchView;
 import framework.base.BaseFragment;
 import framework.data.Constant;
 import framework.utils.ImageLoaderUtils;
 import framework.utils.UIUtils;
-import rx.Observable;
 
 /**
  * by y on 2016/8/7.
  */
-public class SearchFragment extends BaseFragment
+public class SearchFragment extends BaseFragment<SearchPresenterImpl>
         implements View.OnClickListener, SearchView,
         XBaseAdapter.OnItemClickListener<ListModel>
         , SearchDialog.SearchInterface,
@@ -43,8 +41,12 @@ public class SearchFragment extends BaseFragment
     private Toolbar toolbar;
     private ProgressBar progressBar;
 
-    private SearchPresenter searchPresenter;
     private XRecyclerViewAdapter<ListModel> mAdapter;
+
+    @Override
+    protected SearchPresenterImpl initPresenter() {
+        return new SearchPresenterImpl(this);
+    }
 
     @Override
     protected void initById() {
@@ -56,10 +58,9 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
-    protected void initData() {
+    protected void initActivityCreated() {
         showExplanation();
         floatingActionButton.setOnClickListener(this);
-        searchPresenter = new SearchPresenterImpl(this);
         mAdapter = new XRecyclerViewAdapter<>();
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(mAdapter
@@ -83,13 +84,6 @@ public class SearchFragment extends BaseFragment
         }
     }
 
-    @Override
-    public void setData(List<ListModel> data) {
-        if (!data.isEmpty()) {
-            toolbar.setTitle(data.get(0).getAuthor().getName());
-            mAdapter.addAllData(data);
-        }
-    }
 
     @Override
     public void adapterRemove() {
@@ -111,11 +105,6 @@ public class SearchFragment extends BaseFragment
         textView.setVisibility(View.GONE);
     }
 
-    @Override
-    public void netWorkError() {
-        showExplanation();
-        UIUtils.SnackBar(floatingActionButton, getString(R.string.suffix_error));
-    }
 
     @Override
     public void showProgress() {
@@ -128,13 +117,6 @@ public class SearchFragment extends BaseFragment
     }
 
     @Override
-    public void viewBindToLifecycle(Observable<List<ListModel>> observable) {
-        if (observable != null) {
-            observable.compose(this.bindToLifecycle());
-        }
-    }
-
-    @Override
     public void onItemClick(View view, int position, ListModel info) {
         DetailActivity.startIntent(info.getSlug());
     }
@@ -142,7 +124,7 @@ public class SearchFragment extends BaseFragment
     @Override
     public void startSearch(String suffix, String limit) {
         adapterRemove();
-        searchPresenter.netWorkRequest(suffix, limit);
+        presenter.netWorkRequest(suffix, limit);
     }
 
     @Override
@@ -150,4 +132,19 @@ public class SearchFragment extends BaseFragment
         holder.setTextView(R.id.list_tv, listModel.getTitle());
         ImageLoaderUtils.display(holder.getImageView(R.id.list_image), listModel.getTitleImage());
     }
+
+    @Override
+    public void rxNetWorkError(Throwable e) {
+        showExplanation();
+        UIUtils.SnackBar(floatingActionButton, getString(R.string.suffix_error));
+    }
+
+    @Override
+    public void rxNetWorkSuccess(List<ListModel> mData) {
+        if (!mData.isEmpty()) {
+            toolbar.setTitle(mData.get(0).getAuthor().getName());
+            mAdapter.addAllData(mData);
+        }
+    }
+
 }

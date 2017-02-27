@@ -10,7 +10,7 @@ public class ListModel {
     private int slug;
     private Author author;
 
-    public class Author {
+    public static class Author {
         private String profileUrl;
         private String bio;
         private String name;

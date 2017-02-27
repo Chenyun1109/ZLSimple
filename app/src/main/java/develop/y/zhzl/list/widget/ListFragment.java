@@ -17,21 +17,19 @@ import java.util.List;
 import develop.y.zhzl.R;
 import develop.y.zhzl.detail.widget.DetailActivity;
 import develop.y.zhzl.list.model.ListModel;
-import develop.y.zhzl.list.presenter.ListPresenter;
 import develop.y.zhzl.list.presenter.ListPresenterImpl;
 import develop.y.zhzl.list.view.IListView;
 import framework.base.BaseFragment;
 import framework.data.Constant;
 import framework.utils.ImageLoaderUtils;
 import framework.utils.UIUtils;
-import rx.Observable;
 
 import static framework.data.Constant.getSuffix;
 
 /**
  * by y on 2016/8/7.
  */
-public class ListFragment extends BaseFragment
+public class ListFragment extends BaseFragment<ListPresenterImpl>
         implements SwipeRefreshLayout.OnRefreshListener, IListView,
         XBaseAdapter.OnXBindListener<ListModel>,
         XBaseAdapter.OnItemClickListener<ListModel>,
@@ -41,9 +39,7 @@ public class ListFragment extends BaseFragment
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private ListPresenter listPresenter;
     private XRecyclerViewAdapter<ListModel> mAdapter;
-
 
     public static ListFragment newInstance(int position, String type) {
         ListFragment listFragment = new ListFragment();
@@ -64,6 +60,10 @@ public class ListFragment extends BaseFragment
         }
     }
 
+    @Override
+    protected ListPresenterImpl initPresenter() {
+        return new ListPresenterImpl(this);
+    }
 
     @Override
     protected void initById() {
@@ -72,13 +72,11 @@ public class ListFragment extends BaseFragment
     }
 
     @Override
-    protected void initData() {
+    protected void initActivityCreated() {
         if (!isPrepared || !isVisible || isLoad) {
             return;
         }
-        listPresenter = new ListPresenterImpl(this);
         mAdapter = new XRecyclerViewAdapter<>();
-
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(Constant.RECYCLERVIEW_LISTVIEW, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(
                 mAdapter.initXData(new LinkedList<>())
@@ -104,14 +102,9 @@ public class ListFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-        listPresenter.netWorkRequest(getSuffix(pos, type), Constant.LIMIT);
+        presenter.netWorkRequest(getSuffix(pos, type), Constant.LIMIT);
     }
 
-
-    @Override
-    public void setData(List<ListModel> data) {
-        mAdapter.addAllData(data);
-    }
 
     @Override
     public void removeAllAdapter() {
@@ -128,20 +121,6 @@ public class ListFragment extends BaseFragment
         mAdapter.isShowEmptyView();
     }
 
-    @Override
-    public void viewBindToLifecycle(Observable<List<ListModel>> observable) {
-        if (observable != null) {
-            observable.compose(this.bindToLifecycle());
-        }
-    }
-
-
-    @Override
-    public void netWorkError() {
-        isShowEmptyView();
-        if (getActivity() != null)
-            UIUtils.SnackBar(getActivity().findViewById(R.id.coordinatorLayout), getString(R.string.network_error));
-    }
 
     @Override
     public void showProgress() {
@@ -173,4 +152,17 @@ public class ListFragment extends BaseFragment
     public void onXEmptyViewClick(View view) {
         onRefresh();
     }
+
+    @Override
+    public void rxNetWorkError(Throwable e) {
+        isShowEmptyView();
+        if (getActivity() != null)
+            UIUtils.SnackBar(getActivity().findViewById(R.id.coordinatorLayout), getString(R.string.network_error));
+    }
+
+    @Override
+    public void rxNetWorkSuccess(List<ListModel> mData) {
+        mAdapter.addAllData(mData);
+    }
+
 }

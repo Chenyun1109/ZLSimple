@@ -2,14 +2,11 @@ package develop.y.zhzl.list.widget;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import develop.y.zhzl.R;
 import framework.base.BaseFragment;
-
-import static framework.data.Constant.getTabName;
+import framework.mvp.PresenterCompat;
 
 /**
  * by y on 2016/8/7.
@@ -18,6 +15,7 @@ public class TabFragment extends BaseFragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private TabAdapter adapter;
 
     public static TabFragment newInstance(String type) {
         TabFragment imageListTabFragment = new TabFragment();
@@ -36,31 +34,21 @@ public class TabFragment extends BaseFragment {
         }
     }
 
-
     @Override
-    protected void initById() {
-        tabLayout = getView(R.id.tab_layout);
-        viewPager = getView(R.id.viewPager);
+    protected PresenterCompat initPresenter() {
+        return null;
     }
 
     @Override
-    protected void initData() {
-        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return ListFragment.newInstance(position, type);
-            }
+    protected void initById() {
+        tabLayout = (TabLayout) getView(R.id.tab_layout);
+        viewPager = (ViewPager) getView(R.id.viewPager);
+    }
 
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return getTabName(type)[position];
-            }
-
-            @Override
-            public int getCount() {
-                return getTabName(type).length;
-            }
-        });
+    @Override
+    protected void initActivityCreated() {
+        adapter = new TabAdapter(getChildFragmentManager(), type);
+        viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
