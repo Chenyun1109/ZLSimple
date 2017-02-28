@@ -45,6 +45,6 @@ dependencies {
     compile "com.github.zhaokaiqiang.klog:library:$klogVersion"
     compile "com.github.bumptech.glide:glide:$glideVersion"
     compile 'com.xadapter:xadapter:0.0.6'
-    compile project(':RxNetWork')
+    compile 'com.ydevelop:rxNetWork:0.0.2'
     compile project(':backlayout')
 }
