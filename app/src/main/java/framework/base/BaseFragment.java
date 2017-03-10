@@ -1,8 +1,9 @@
 package framework.base;
 
+import com.rxnetwork.manager.RxSubscriptionManager;
+
 import framework.mvp.MVPLazyFragment;
 import framework.mvp.PresenterCompat;
-
 
 
 /**
@@ -18,5 +19,11 @@ public abstract class BaseFragment<
     protected int pos = 0;
     protected String type = null;
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        RxSubscriptionManager.getInstance().unSubscription();
+    }
 }
 

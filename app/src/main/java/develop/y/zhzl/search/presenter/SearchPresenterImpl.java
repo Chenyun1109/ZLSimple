@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.rxnetwork.bus.RxBus;
 import com.rxnetwork.bus.RxBusCallBack;
 import com.rxnetwork.manager.RxNetWork;
-import framework.mvp.PresenterCompat;
 
 import java.util.List;
 
@@ -13,6 +12,7 @@ import develop.y.zhzl.list.model.ListModel;
 import develop.y.zhzl.search.view.SearchView;
 import framework.api.Api;
 import framework.data.Constant;
+import framework.mvp.PresenterCompat;
 import framework.sql.SearchSuffixDb;
 
 /**

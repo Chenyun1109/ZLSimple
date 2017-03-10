@@ -18,16 +18,6 @@ import java.lang.reflect.Method;
 
 public class StatusBarUtil {
 
-    public static class StatusBarView extends View {
-        public StatusBarView(Context context, AttributeSet attrs) {
-            super(context, attrs);
-        }
-
-        public StatusBarView(Context context) {
-            super(context);
-        }
-    }
-
     private static final int DEFAULT_STATUS_BAR_ALPHA = 112;
 
     /**
@@ -485,6 +475,16 @@ public class StatusBarUtil {
             field.set(lp, origin | value);
         } else {
             field.set(lp, (~value) & origin);
+        }
+    }
+
+    public static class StatusBarView extends View {
+        public StatusBarView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public StatusBarView(Context context) {
+            super(context);
         }
     }
 }

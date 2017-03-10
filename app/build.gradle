@@ -2,6 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'me.tatarka.retrolambda'
 
+def buildConfigLog = "LOG_DEBUG"
+def buildConfigFiledOpen = "boolean"
+def buildConfigDeBug = "true"
+def buildConfigRelease = "false"
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -16,16 +21,26 @@ android {
     greendao {
         targetGenDir 'src/main/java'
     }
+//    signingConfigs {
+//        release {
+//            storeFile file()
+//            storePassword
+//            keyAlias
+//            keyPassword
+//        }
+//    }
     buildTypes {
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField buildConfigFiledOpen, buildConfigLog, buildConfigDeBug
             minifyEnabled false
             zipAlignEnabled true
             shrinkResources true
+//            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "boolean", "LOG_DEBUG", "true"
+//            signingConfig signingConfigs.release
+            buildConfigField buildConfigFiledOpen, buildConfigLog, buildConfigRelease
             minifyEnabled false
         }
     }
@@ -44,7 +59,7 @@ dependencies {
     compile "org.greenrobot:greendao:$greendao3xVersion"
     compile "com.github.zhaokaiqiang.klog:library:$klogVersion"
     compile "com.github.bumptech.glide:glide:$glideVersion"
-    compile 'com.xadapter:xadapter:0.0.6'
-    compile 'com.ydevelop:rxNetWork:0.0.2'
+    compile("com.xadapter:xadapter:0.0.9", { exclude group: 'com.android.support' })
+    compile("com.ydevelop:rxNetWork:0.0.4", { exclude group: 'com.android.support' })
     compile project(':backlayout')
 }

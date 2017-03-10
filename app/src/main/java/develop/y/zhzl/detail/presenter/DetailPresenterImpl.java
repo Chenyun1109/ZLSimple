@@ -2,11 +2,11 @@ package develop.y.zhzl.detail.presenter;
 
 
 import com.rxnetwork.manager.RxNetWork;
-import framework.mvp.PresenterCompat;
 
 import develop.y.zhzl.detail.model.DetailModel;
 import develop.y.zhzl.detail.view.DetailView;
 import framework.api.Api;
+import framework.mvp.PresenterCompat;
 
 /**
  * by y on 2016/8/7.

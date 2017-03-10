@@ -20,12 +20,12 @@ public class ListDialog extends BaseDialog implements View.OnClickListener {
     private TextView textView;
     private String suffix;
 
-    public static void start(Context context, String suffix) {
-        new ListDialog(context).initData(suffix);
-    }
-
     private ListDialog(@NonNull Context context) {
         super(context);
+    }
+
+    public static void start(Context context, String suffix) {
+        new ListDialog(context).initData(suffix);
     }
 
     @Override

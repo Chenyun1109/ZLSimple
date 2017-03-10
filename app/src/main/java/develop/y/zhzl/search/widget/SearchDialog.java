@@ -18,13 +18,13 @@ public class SearchDialog extends BaseDialog implements View.OnClickListener {
     private EditText limitEditText;
     private SearchInterface searchInterface = null;
 
-    public static void start(Context context, SearchInterface searchInterface) {
-        new SearchDialog(context, searchInterface);
-    }
-
     protected SearchDialog(@NonNull Context context, SearchInterface searchInterface) {
         super(context);
         this.searchInterface = searchInterface;
+    }
+
+    public static void start(Context context, SearchInterface searchInterface) {
+        new SearchDialog(context, searchInterface);
     }
 
     @Override

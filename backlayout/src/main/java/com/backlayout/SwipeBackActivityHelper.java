@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 
-
 class SwipeBackActivityHelper {
     private final Activity mActivity;
     private SwipeBackLayout mSwipeBackLayout;

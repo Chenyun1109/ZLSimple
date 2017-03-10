@@ -44,6 +44,7 @@ public class MainActivity extends DarkViewActivity
     private AppBarLayout.LayoutParams layoutParams;
     private ImageView imageViewTheme;
     private MainPresenter mPresenter;
+    private long exitTime = 0;
 
     @Override
     protected void initCreate(Bundle savedInstanceState) {
@@ -80,8 +81,6 @@ public class MainActivity extends DarkViewActivity
     protected boolean isSwipeBackLayout() {
         return false;
     }
-
-    private long exitTime = 0;
 
     @Override
     public void onBackPressed() {

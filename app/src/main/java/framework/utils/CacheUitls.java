@@ -6,13 +6,8 @@ public class CacheUitls {
 
     private final HashMap<String, Object> hashMap = new HashMap<>();
 
-    private static class CacheHolder {
-        static final CacheUitls CACHE_UITLS = new CacheUitls();
-    }
-
     private CacheUitls() {
     }
-
 
     public static CacheUitls getInstance() {
         return CacheHolder.CACHE_UITLS;
@@ -29,5 +24,9 @@ public class CacheUitls {
 
     public void remove(String key) {
         hashMap.remove(key);
+    }
+
+    private static class CacheHolder {
+        static final CacheUitls CACHE_UITLS = new CacheUitls();
     }
 }

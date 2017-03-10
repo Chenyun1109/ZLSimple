@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.rxnetwork.bus.RxBus;
 import com.rxnetwork.manager.RxNetWork;
+import com.rxnetwork.manager.RxSubscriptionManager;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -22,11 +23,13 @@ import framework.utils.SPUtils;
 public class App extends Application {
 
     private static final String K_LOG = "K";
-
-    private final List<Activity> activityList = new ArrayList<>();
-
     @SuppressLint("StaticFieldLeak")
     private static Context context;
+    private final List<Activity> activityList = new ArrayList<>();
+
+    public static App getInstance() {
+        return (App) context;
+    }
 
     @Override
     public void onCreate() {
@@ -37,27 +40,18 @@ public class App extends Application {
         RxNetWork.getInstance().setBaseUrl(Api.BASE_API);
     }
 
-    public static App getInstance() {
-        return (App) context;
-    }
-
     public void addActivity(Activity activity) {
         activityList.add(activity);
     }
 
     public void exit() {
-        for (Activity activity : activityList) {
-            activity.finish();
-        }
-        RxNetWork.getInstance().clearSubscription();
+        activityList.forEach(Activity::finish);
+        RxSubscriptionManager.getInstance().clearSubscription();
         RxBus.getInstance().unregisterAll();
-        RxNetWork.getInstance().clearSubscription();
     }
 
     public void refreshAllActivity() {
-        for (Activity activity : activityList) {
-            activity.recreate();
-        }
+        activityList.forEach(Activity::recreate);
     }
 
     public void removeActivity(Activity activity) {

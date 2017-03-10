@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.backlayout.SwipeBackActivity;
 import com.backlayout.SwipeBackLayout;
+import com.rxnetwork.manager.RxSubscriptionManager;
 
 import develop.y.zhzl.R;
 import framework.App;
@@ -64,5 +65,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
     protected void onDestroy() {
         super.onDestroy();
         App.getInstance().removeActivity(this);
+        RxSubscriptionManager.getInstance().unSubscription();
     }
 }

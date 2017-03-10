@@ -7,9 +7,9 @@ import android.os.Build;
 
 public class SPUtils {
 
-    private static SharedPreferences sharedPreferences;
     private static final String SHAREDPREFERENCES_NAME = "example";
     private static final String THEME = "theme";
+    private static SharedPreferences sharedPreferences;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private static void initSharePreferences(Context context) {

@@ -1,4 +1,3 @@
-
 package com.backlayout;
 
 import android.app.Activity;

@@ -27,12 +27,12 @@ import framework.utils.UIUtils;
 public class DetailActivity extends DarkViewActivity
         implements DetailView {
 
+    private static final String BUNDLE_TYPE = "slug";
     private ImageView imageView;
     private CollapsingToolbarLayout collapsingToolbar;
     private FloatingActionButton floatingActionButton;
     private WebView webView;
     private ProgressBar progressBar;
-    private static final String BUNDLE_TYPE = "slug";
 
     public static void startIntent(int slug) {
         Bundle bundle = new Bundle();

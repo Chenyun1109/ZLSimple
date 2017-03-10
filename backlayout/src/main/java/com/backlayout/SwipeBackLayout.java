@@ -18,26 +18,16 @@ import java.util.List;
 
 
 public class SwipeBackLayout extends FrameLayout {
-    private static final int MIN_FLING_VELOCITY = 400; // dips per second
-
-    private static final int DEFAULT_SCRIM_COLOR = 0x99000000;
-
-    private static final int FULL_ALPHA = 255;
-
     public static final int EDGE_LEFT = ViewDragHelper.EDGE_LEFT;
-
     public static final int EDGE_RIGHT = ViewDragHelper.EDGE_RIGHT;
-
     public static final int EDGE_BOTTOM = ViewDragHelper.EDGE_BOTTOM;
-
     public static final int EDGE_ALL = EDGE_LEFT | EDGE_RIGHT | EDGE_BOTTOM;
-
     public static final int STATE_IDLE = ViewDragHelper.STATE_IDLE;
-
     public static final int STATE_DRAGGING = ViewDragHelper.STATE_DRAGGING;
-
     public static final int STATE_SETTLING = ViewDragHelper.STATE_SETTLING;
-
+    private static final int MIN_FLING_VELOCITY = 400; // dips per second
+    private static final int DEFAULT_SCRIM_COLOR = 0x99000000;
+    private static final int FULL_ALPHA = 255;
     private static final float DEFAULT_SCROLL_THRESHOLD = 0.3f;
 
     private static final int OVERSCROLL_DISTANCE = 10;
@@ -166,14 +156,6 @@ public class SwipeBackLayout extends FrameLayout {
             return;
         }
         mListeners.remove(listener);
-    }
-
-    public interface SwipeListener {
-        void onScrollStateChange(int state, float scrollPercent);
-
-        void onEdgeTouch(int edgeFlag);
-
-        void onScrollOverThreshold();
     }
 
     public void setScrollThresHold(float threshold) {
@@ -337,6 +319,14 @@ public class SwipeBackLayout extends FrameLayout {
         }
     }
 
+    public interface SwipeListener {
+        void onScrollStateChange(int state, float scrollPercent);
+
+        void onEdgeTouch(int edgeFlag);
+
+        void onScrollOverThreshold();
+    }
+
     private class ViewDragCallback extends ViewDragHelper.Callback {
         private boolean mIsScrollOverValid;
 
@@ -403,9 +393,7 @@ public class SwipeBackLayout extends FrameLayout {
                     && mDragHelper.getViewDragState() == STATE_DRAGGING
                     && mScrollPercent >= mScrollThreshold && mIsScrollOverValid) {
                 mIsScrollOverValid = false;
-                for (SwipeListener listener : mListeners) {
-                    listener.onScrollOverThreshold();
-                }
+                mListeners.forEach(SwipeListener::onScrollOverThreshold);
             }
 
             if (mScrollPercent >= 1) {
