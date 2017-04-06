@@ -51,7 +51,11 @@ public class App extends Application {
     }
 
     public void refreshAllActivity() {
-        activityList.forEach(Activity::recreate);
+        int size = activityList.size();
+        for (int i = 0; i < size; i++) {
+            activityList.get(i).recreate();
+        }
+        //Lambda NoClassDefFoundError
     }
 
     public void removeActivity(Activity activity) {
