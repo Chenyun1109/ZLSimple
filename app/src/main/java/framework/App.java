@@ -45,7 +45,10 @@ public class App extends Application {
     }
 
     public void exit() {
-        activityList.forEach(Activity::finish);
+        int size = activityList.size();
+        for (int i = 0; i < size; i++) {
+            activityList.get(i).finish();
+        }
         RxSubscriptionManager.getInstance().clearSubscription();
         RxBus.getInstance().unregisterAll();
     }

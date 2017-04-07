@@ -14,6 +14,7 @@ import framework.api.Api;
 import framework.data.Constant;
 import framework.mvp.PresenterCompat;
 import framework.sql.SearchSuffixDb;
+import rx.Subscription;
 
 /**
  * by y on 2016/8/7.
@@ -22,10 +23,11 @@ public class SearchPresenterImpl extends PresenterCompat<List<ListModel>, Search
         implements SearchPresenter, RxBusCallBack<String> {
 
     private String suffix = "";
+    private final Subscription annalSubscription;
 
     public SearchPresenterImpl(SearchView mView) {
         super(mView);
-        RxBus.getInstance().toSubscription(Constant.ANNAL_TAG, String.class, this);
+        annalSubscription = RxBus.getInstance().toSubscription(Constant.ANNAL_TAG, String.class, this);
     }
 
     @Override
@@ -60,7 +62,7 @@ public class SearchPresenterImpl extends PresenterCompat<List<ListModel>, Search
     @Override
     public void onNext(String data) {
         netWorkRequest(data, "");
-        RxBus.getInstance().unregister(Constant.ANNAL_TAG);
+        RxBus.getInstance().unregister(Constant.ANNAL_TAG, annalSubscription);
     }
 
     @Override

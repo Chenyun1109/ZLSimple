@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.rxnetwork.bus.RxBus;
 import com.rxnetwork.bus.RxBusCallBack;
+import com.rxnetwork.manager.RxSubscriptionManager;
 
 import develop.y.zhzl.R;
 import develop.y.zhzl.list.widget.TabFragment;
@@ -29,6 +30,7 @@ import framework.utils.CacheUitls;
 import framework.utils.SPUtils;
 import framework.utils.StatusBarUtil;
 import framework.utils.UIUtils;
+import rx.Subscription;
 
 public class MainActivity extends DarkViewActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -45,6 +47,7 @@ public class MainActivity extends DarkViewActivity
     private ImageView imageViewTheme;
     private MainPresenter mPresenter;
     private long exitTime = 0;
+    private Subscription themeSubscription;
 
     @Override
     protected void initCreate(Bundle savedInstanceState) {
@@ -56,7 +59,7 @@ public class MainActivity extends DarkViewActivity
         layoutParams = (AppBarLayout.LayoutParams) appBarLayout.getChildAt(0).getLayoutParams();
         mPresenter = new MainPresenterImpl(this);
         imageViewTheme.setBackgroundResource(getThemeType() ? R.drawable.day : R.drawable.night);
-        RxBus.getInstance().toSubscription(Constant.THEME_TAG, String.class, this);
+        themeSubscription = RxBus.getInstance().toSubscription(Constant.THEME_TAG, String.class, this);
         allowSlide();
     }
 
@@ -100,6 +103,7 @@ public class MainActivity extends DarkViewActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        RxSubscriptionManager.getInstance().clearSubscription();
         toolbar.setTitle(item.getTitle());
         mPresenter.switchId(item.getItemId());
         return true;
@@ -206,7 +210,7 @@ public class MainActivity extends DarkViewActivity
     @Override
     public void onNext(String data) {
         navigationView.getMenu().findItem(R.id.zhihu).setChecked(true);
-        RxBus.getInstance().unregister(Constant.THEME_TAG);
+        RxBus.getInstance().unregister(Constant.THEME_TAG, themeSubscription);
     }
 
     @Override
