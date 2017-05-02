@@ -202,7 +202,7 @@ public class MainActivity extends DarkViewActivity
     public void alterTheme() {
         imageViewTheme.setBackgroundResource(getThemeType() ? R.drawable.day : R.drawable.night);
         setTheme(getThemeType() ? Constant.NIGHT_STYLES : Constant.DAY_STYLES);
-        SPUtils.setTheme(getThemeType() ? Constant.NIGHT : Constant.DAY);
+        SPUtils.setTheme(!getThemeType());
         CacheUitls.getInstance().put(Constant.BITMAP_CACHE_KEY, UIUtils.captureContent(this));
         TransitionActivity.startIntent();
     }

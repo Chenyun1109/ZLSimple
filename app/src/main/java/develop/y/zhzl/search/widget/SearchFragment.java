@@ -108,11 +108,13 @@ public class SearchFragment extends BaseFragment<SearchPresenterImpl>
 
     @Override
     public void showProgress() {
+        recyclerView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
+        recyclerView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
     }
 

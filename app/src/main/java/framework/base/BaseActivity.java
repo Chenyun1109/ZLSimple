@@ -38,7 +38,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     public boolean getThemeType() {
-        return SPUtils.isTheme(Constant.DAY);
+        return SPUtils.isTheme(true);
     }
 
 

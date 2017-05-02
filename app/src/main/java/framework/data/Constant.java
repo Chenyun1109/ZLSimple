@@ -26,10 +26,6 @@ public class Constant {
     public static final String BOOK = "book";
     public static final String INTERNET = "internet";
 
-    public static final boolean DAY = true;
-    public static final boolean NIGHT = false;
-
-
     public static final int DAY_STYLES = R.style.AppTheme_Day;
     public static final int NIGHT_STYLES = R.style.AppTheme_Night;
 

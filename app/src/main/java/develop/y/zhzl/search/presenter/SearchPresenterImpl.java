@@ -62,7 +62,7 @@ public class SearchPresenterImpl extends PresenterCompat<List<ListModel>, Search
     @Override
     public void onNext(String data) {
         netWorkRequest(data, "");
-        RxBus.getInstance().unregister(Constant.ANNAL_TAG, annalSubscription);
+//        RxBus.getInstance().unregister(Constant.ANNAL_TAG, annalSubscription);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package framework.utils;
 
-import framework.data.Constant;
-
 /**
  * by y on 2016/8/7.
  */
@@ -9,7 +7,7 @@ public class HtmlUtils {
 
     public static String getHtml(String content) {
         String css;
-        if (SPUtils.isTheme(Constant.DAY)) {
+        if (SPUtils.isTheme(true)) {
             css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zl_day.css\" type=\"text/css\">";
         } else {
             css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zl_night.css\" type=\"text/css\">";
