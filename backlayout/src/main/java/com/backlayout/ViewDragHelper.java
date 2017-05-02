@@ -53,9 +53,12 @@ public class ViewDragHelper {
     private static final int BASE_SETTLE_DURATION = 256; // ms
 
     private static final int MAX_SETTLE_DURATION = 600; // ms
-    private static final Interpolator sInterpolator = t -> {
-        t -= 1.0f;
-        return t * t * t * t * t + 1.0f;
+    private static final Interpolator sInterpolator = new Interpolator() {
+        @Override
+        public float getInterpolation(float t) {
+            t -= 1.0f;
+            return t * t * t * t * t + 1.0f;
+        }
     };
     private final Callback mCallback;
     private final ViewGroup mParentView;
@@ -77,7 +80,12 @@ public class ViewDragHelper {
     private int mTrackingEdges;
     private ScrollerCompat mScroller;
     private View mCapturedView;
-    private final Runnable mSetIdleRunnable = () -> setDragState(STATE_IDLE);
+    private final Runnable mSetIdleRunnable = new Runnable() {
+        @Override
+        public void run() {
+            setDragState(STATE_IDLE);
+        }
+    };
     private boolean mReleaseInProgress;
     private float density;
 

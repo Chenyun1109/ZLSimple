@@ -393,7 +393,9 @@ public class SwipeBackLayout extends FrameLayout {
                     && mDragHelper.getViewDragState() == STATE_DRAGGING
                     && mScrollPercent >= mScrollThreshold && mIsScrollOverValid) {
                 mIsScrollOverValid = false;
-                mListeners.forEach(SwipeListener::onScrollOverThreshold);
+                for (int i = 0; i < mListeners.size(); i++) {
+                    mListeners.get(i).onScrollOverThreshold();
+                }
             }
 
             if (mScrollPercent >= 1) {
