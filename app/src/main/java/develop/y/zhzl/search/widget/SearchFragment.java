@@ -67,6 +67,7 @@ public class SearchFragment extends BaseFragment<SearchPresenterImpl>
                 .initXData(new LinkedList<>())
                 .addRecyclerView(recyclerView)
                 .setLayoutId(R.layout.list_item)
+                .setOnItemClickListener(this)
                 .onXBind(this));
     }
 
