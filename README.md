@@ -3,6 +3,11 @@ Rxjava和Retrofit构建的一个知乎专栏
 下载地址：http://fir.im/zhihuzl
 
 
+> Kotlin 版
+
+
+[ZLSimple_kotlin](https://github.com/7449/ZLSimple/tree/kotlin)
+
 >新增知乎专栏微信小程序版本,提交在分支
 
 详情页面暂时没找到好办法解析数据，只能直接展示内容了
