@@ -22,11 +22,11 @@ public abstract class BaseActivity extends SwipeBackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(getThemeType() ? Constant.DAY_STYLES : Constant.NIGHT_STYLES);
+        setTheme(getThemeType() ? Constant.INSTANCE.getDAY_STYLES() : Constant.INSTANCE.getNIGHT_STYLES());
         setContentView(getLayoutId());
         initById();
-        initCreate(savedInstanceState);
-        App.getInstance().addActivity(this);
+        initCreate();
+        App.Companion.getInstance().addActivity(this);
         SwipeBackLayout swipeBackLayout = getSwipeBackLayout();
         swipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT && isSwipeBackLayout()) {
@@ -38,7 +38,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     public boolean getThemeType() {
-        return SPUtils.isTheme(true);
+        return SPUtils.INSTANCE.isTheme(true);
     }
 
 
@@ -47,7 +47,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
         return (T) findViewById(id);
     }
 
-    protected abstract void initCreate(Bundle savedInstanceState);
+    protected abstract void initCreate();
 
     protected abstract void initById();
 
@@ -63,6 +63,6 @@ public abstract class BaseActivity extends SwipeBackActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        App.getInstance().removeActivity(this);
+        App.Companion.getInstance().removeActivity(this);
     }
 }

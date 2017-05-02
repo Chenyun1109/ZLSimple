@@ -7,7 +7,7 @@ public class HtmlUtils {
 
     public static String getHtml(String content) {
         String css;
-        if (SPUtils.isTheme(true)) {
+        if (SPUtils.INSTANCE.isTheme(true)) {
             css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zl_day.css\" type=\"text/css\">";
         } else {
             css = "<link rel=\"stylesheet\" href=\"file:///android_asset/zl_night.css\" type=\"text/css\">";
