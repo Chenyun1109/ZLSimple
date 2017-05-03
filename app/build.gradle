@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.greenrobot.greendao'
-apply plugin: 'me.tatarka.retrolambda'
 
 def buildConfigLog = "LOG_DEBUG"
 def buildConfigFiledOpen = "boolean"
@@ -44,10 +43,6 @@ android {
             buildConfigField buildConfigFiledOpen, buildConfigLog, buildConfigRelease
             minifyEnabled false
         }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
